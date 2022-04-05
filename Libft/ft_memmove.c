@@ -6,7 +6,7 @@
 /*   By: mkwak <mkwak@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 13:19:18 by mkwak             #+#    #+#             */
-/*   Updated: 2022/03/14 16:06:16 by mkwak            ###   ########.fr       */
+/*   Updated: 2022/04/05 15:59:11 by mkwak            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 		return (dst);
 	if (dst <= src)
 	{
-		d_tmp = dst;
-		s_tmp = src;
+		d_tmp = (unsigned char *)dst;
+		s_tmp = (unsigned char *)src;
 		while (len--)
 			*d_tmp++ = *s_tmp++;
 	}
@@ -30,7 +30,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	{
 		d_tmp = dst;
 		d_tmp += len;
-		s_tmp = src;
+		s_tmp = (unsigned char *)src;
 		while (len--)
 			*--d_tmp = *--s_tmp;
 	}

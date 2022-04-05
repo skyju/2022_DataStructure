@@ -6,7 +6,7 @@
 /*   By: mkwak <mkwak@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 13:19:18 by mkwak             #+#    #+#             */
-/*   Updated: 2022/03/14 16:06:24 by mkwak            ###   ########.fr       */
+/*   Updated: 2022/04/05 16:20:03 by mkwak            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int	s_len = ft_strlen((char *)s);
+	int	s_len;
+
+	s_len = ft_strlen((char *)s);
 	while (--s_len)
 	{
 		if (s[s_len] == (unsigned char)c)

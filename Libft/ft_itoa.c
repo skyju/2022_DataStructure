@@ -6,7 +6,7 @@
 /*   By: mkwak <mkwak@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 15:53:50 by mkwak             #+#    #+#             */
-/*   Updated: 2022/03/14 16:22:18 by mkwak            ###   ########.fr       */
+/*   Updated: 2022/04/05 16:13:31 by mkwak            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	malloc_size_cal(int nbr)
 	return (cnt);
 }
 
-int	make_str(char *res, int nbr, int i)
+void	make_str(char *res, int nbr, int i)
 {
 	if (nbr < 0)
 	{
@@ -48,7 +48,7 @@ char	*ft_itoa(int nbr)
 {
 	char	*res;
 	int		malloc_size;
-	
+
 	malloc_size = malloc_size_cal(nbr);
 	res = (char *)malloc(sizeof(char) * (malloc_size + 1));
 	if (!res)

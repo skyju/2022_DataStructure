@@ -6,7 +6,7 @@
 /*   By: mkwak <mkwak@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:06:03 by mkwak             #+#    #+#             */
-/*   Updated: 2022/03/14 16:45:40 by mkwak            ###   ########.fr       */
+/*   Updated: 2022/04/05 16:14:56 by mkwak            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	is_sep(char s, char c)
 	return (s == c);
 }
 
-int	count_words(char const *ss, char c)
+int	count_words(char const *s, char c)
 {
 	int	i;
-	int words_num;
+	int	words_num;
 
 	i = 0;
 	words_num = 0;
@@ -44,8 +44,9 @@ char	*ft_make_str(char *str, char c)
 	res_len = 0;
 	while (*(str + res_len) && !is_sep(str[res_len], c))
 		++res_len;
-	if (!(res = (char *)malloc(sizeof(char) * (res_len + 1))))
-		return (0);
+	res = (char *)malloc(sizeof(char) * (res_len + 1));
+	if (!res)
+		return (NULL);
 	i = 0;
 	while (i < res_len)
 	{
@@ -64,8 +65,9 @@ char	**ft_split(char const *s, char c)
 
 	if (s == NULL)
 		return (NULL);
-	if (!(res = (char **)malloc(sizeof(char *) * (count_words(s, c) + 1))))
-		return (0);
+	res = (char **)malloc(sizeof(char *) * (count_words(s, c) + 1));
+	if (!res)
+		return (NULL);
 	i = 0;
 	res_i = 0;
 	while (s[i])
@@ -73,10 +75,10 @@ char	**ft_split(char const *s, char c)
 		while (s[i] && is_sep(s[i], c))
 			++i;
 		if (s[i] && !is_sep(s[i], c))
-			res[res_i++] = ft_make_str(s + i, c);
+			res[res_i++] = ft_make_str((char *)(s + i), c);
 		while (s[i] && !is_sep(s[i], c))
 			++i;
 	}
 	res[res_i] = 0;
-	retrun (res);
+	return (res);
 }

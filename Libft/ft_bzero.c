@@ -6,7 +6,7 @@
 /*   By: mkwak <mkwak@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:00:04 by mkwak             #+#    #+#             */
-/*   Updated: 2022/03/14 16:06:06 by mkwak            ###   ########.fr       */
+/*   Updated: 2022/04/05 16:10:52 by mkwak            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ void	ft_bzero(void *s, size_t n)
 	size_t			i;
 	unsigned char	*tmp;
 
-	tmp = (unsigned char *)s;
+	tmp = s;
 	i = 0;
-	while (i < n)
+	while (i++ < n)
 	{
-		tmp[i] = 0;
-		++i;
+		*tmp++ = 0;
 	}
-	return (tmp);
 }
