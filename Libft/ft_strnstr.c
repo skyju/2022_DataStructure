@@ -6,7 +6,7 @@
 /*   By: mkwak <mkwak@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 13:19:18 by mkwak             #+#    #+#             */
-/*   Updated: 2022/03/14 15:20:12 by mkwak            ###   ########.fr       */
+/*   Updated: 2022/04/07 16:47:00 by mkwak            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	size_t	i;
 
 	i = 0;
+	if (*haystack == '\0')
+		return (0);
 	if (*needle == '\0')
 		return ((char *)haystack);
 	while (*haystack && len-- > 0)

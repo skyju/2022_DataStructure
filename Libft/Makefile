@@ -11,6 +11,9 @@ INC = includes
 $(NAME) : $(OBJS)
 	ar rc $@ $(OBJS)
 
+bonus : $(OBJS)
+	ar rc $(NAME) $^
+
 all : $(NAME)
 
 clean :
@@ -20,3 +23,5 @@ fclean : clean
 	rm -f $(NAME)
 
 re : fclean all
+
+.PHONY : bonus all clean fclean re
