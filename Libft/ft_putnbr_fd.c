@@ -6,7 +6,7 @@
 /*   By: mkwak <mkwak@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 15:53:50 by mkwak             #+#    #+#             */
-/*   Updated: 2022/04/07 16:44:42 by mkwak            ###   ########.fr       */
+/*   Updated: 2022/04/14 18:15:15 by mkwak            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_putnbr_fd(int n, int fd)
 {
 	long int	nbr;
-	
+
 	nbr = n;
 	if (fd < 0)
 		return ;

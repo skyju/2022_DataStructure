@@ -6,7 +6,7 @@
 /*   By: mkwak <mkwak@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:06:03 by mkwak             #+#    #+#             */
-/*   Updated: 2022/04/14 17:54:00 by mkwak            ###   ########.fr       */
+/*   Updated: 2022/04/14 18:16:27 by mkwak            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	count_words(char const *s, char c)
 			words_num++;
 			while (s[i] && is_sep(s[i], c))
 				++i;
-			continue;
+			continue ;
 		}
 		++i;
 	}
