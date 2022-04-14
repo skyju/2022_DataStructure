@@ -6,13 +6,13 @@
 /*   By: mkwak <mkwak@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 13:19:18 by mkwak             #+#    #+#             */
-/*   Updated: 2022/03/14 16:06:16 by mkwak            ###   ########.fr       */
+/*   Updated: 2022/04/14 15:56:54 by mkwak            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, void *src, size_t len)
+void	*ft_memcpy(void *dst, const void *src, size_t len)
 {
 	size_t	i;
 

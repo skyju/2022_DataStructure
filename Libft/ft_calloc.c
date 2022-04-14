@@ -6,7 +6,7 @@
 /*   By: mkwak <mkwak@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:13:38 by mkwak             #+#    #+#             */
-/*   Updated: 2022/04/05 16:35:58 by mkwak            ###   ########.fr       */
+/*   Updated: 2022/04/14 17:30:09 by mkwak            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	void			*res;
-
-	res = (void *)malloc(count * size);
+	void	*res;
+	
+	res = malloc(count * size);
 	if (!res)
 		return (NULL);
-	ft_bzero(res, (count * size));
+	ft_bzero(res, count * size);
 	return (res);
 }

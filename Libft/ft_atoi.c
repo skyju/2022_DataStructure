@@ -6,7 +6,7 @@
 /*   By: mkwak <mkwak@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 13:19:18 by mkwak             #+#    #+#             */
-/*   Updated: 2022/04/07 16:04:39 by mkwak            ###   ########.fr       */
+/*   Updated: 2022/04/14 16:14:51 by mkwak            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_isspace(char c)
 		return (0);
 }
 
-int	ft_atoi(char *str)
+int	ft_atoi(const char *str)
 {
 	int		pos;
 	int		flag;

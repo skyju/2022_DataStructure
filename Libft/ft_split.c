@@ -6,7 +6,7 @@
 /*   By: mkwak <mkwak@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 16:06:03 by mkwak             #+#    #+#             */
-/*   Updated: 2022/04/05 16:14:56 by mkwak            ###   ########.fr       */
+/*   Updated: 2022/04/14 17:54:00 by mkwak            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,23 @@ int	count_words(char const *s, char c)
 
 	i = 0;
 	words_num = 0;
+	if (!s[0])
+		return (0);
+	while (s[i] && is_sep(s[i], c))
+		++i;
 	while (s[i])
 	{
-		if ((i == 0 && s[0] != c)
-			|| (is_sep(s[i], c) && !is_sep(s[i + 1], c))
-			|| s[i + 1])
-			++words_num;
+		if (is_sep(s[i], c))
+		{
+			words_num++;
+			while (s[i] && is_sep(s[i], c))
+				++i;
+			continue;
+		}
 		++i;
 	}
+	if (s[i - 1] != c)
+		words_num++;
 	return (words_num);
 }
 
