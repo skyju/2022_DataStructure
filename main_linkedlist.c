@@ -66,11 +66,25 @@ int main(void) {
 		printf("----------------\n");
 		printf("\n\n");
 
+		printf("----------------\n");
+		printf("%d번째 원소 확인: %d\n", 0, getLLElement(list, 0)->data);
+		printf("----------------\n");
+		printf("\n\n");
+
 		// 원소 하나 더 삭제
 		printf("----------------\n");
 		printf("0번째 원소 삭제!\n");
 		printf("----------------\n");
 		removeLLElement(list, 0);
+		displayLinkedList(list);
+		printf("\n\n");
+
+		// 원소 대체
+		printf("----------------\n");
+		printf("0번째 원소 대체!\n");
+		printf("----------------\n");
+		node.data=22;
+		replaceLLElement(list, 0, node);
 		displayLinkedList(list);
 		printf("\n\n");
 

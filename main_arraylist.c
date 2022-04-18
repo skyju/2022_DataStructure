@@ -63,6 +63,15 @@ int main(void) {
 		displayArrayList(list);
 		printf("\n\n");
 
+		printf("----------------\n");
+		printf("1번째 원소 대체!\n");
+		printf("----------------\n");
+		node.data = 1;
+		replaceALElement(list, 1, node);
+		displayArrayList(list);
+		printf("\n\n");
+		
+
 		// 4. 특정 인덱스 원소 가져와서 출력해보기
 		printf("----------------\n");
 		printf("%d번째 원소 확인: %d\n", 0, getALElement(list, 0)->data);

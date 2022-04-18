@@ -1,3 +1,4 @@
+
 #include "arraylist.h"
 #include <stdlib.h>
 #include <string.h>
@@ -11,7 +12,7 @@ ArrayList* createArrayList(int maxElementCount) {
 		printf("[error : createArrayList] Invalid size.\n");
 		return (NULL);
 	}
-	result = (ArrayList*)malloc(sizeof(ArrayList*));
+	result = (ArrayList*)malloc(sizeof(ArrayList *));
 	if (!result) {
 		printf("[error : createArrayList] Memory allocation failed.\n");
 		return (NULL);
@@ -20,7 +21,7 @@ ArrayList* createArrayList(int maxElementCount) {
 	// 초기화 진행
 	result->maxElementCount = maxElementCount;
 	result->currentElementCount = 0;
-	result->array = (ArrayListNode *)malloc(sizeof(ArrayListNode) * maxElementCount);
+	result->array = (ArrayListNode *)malloc(sizeof(ArrayListNode *) * maxElementCount);
 	if (!result->array) {
 		free(result);
 		printf("[error : createArrayList] Memory allocation failed.\n");
@@ -28,9 +29,23 @@ ArrayList* createArrayList(int maxElementCount) {
 	}
 
 	//배열 만들고 0으로 초기화 (garbage값 오류 문제 해결을 위해)
-	memset(result->array, 0, sizeof(ArrayListNode) * maxElementCount);
+	memset(result->array, 0, sizeof(ArrayListNode *) * maxElementCount);
 	
 	return (result);
+}
+
+// 추가: 원소 대체 함수
+int replaceALElement(ArrayList* list, int index, ArrayListNode element)
+{
+	if (list == NULL) {
+		printf("[error : replaceALElement] ArrayList is Null.\n");
+		return (FALSE);
+	}
+	if (index < 0 || index > list->currentElementCount) {
+		printf("[error : replaceALElement] Invalid index.\n");
+		return (FALSE);
+	}
+	list->array[index] = element;
 }
 
 // 2. 원소 추가 함수
@@ -128,7 +143,7 @@ void clearArrayList(ArrayList* list) {
 		printf("[error : clearArrayList] ArrayList is Null.\n");
 		return ;
 	}
-	memset(list->array, 0, sizeof(ArrayListNode) * list->currentElementCount);
+	memset(list->array, 0, sizeof(ArrayListNode *) * list->currentElementCount);
 	list->currentElementCount = 0; 
 }
 

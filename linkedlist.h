@@ -21,6 +21,7 @@ void displayLinkedList(LinkedList* list);
 void clearLinkedList(LinkedList* list);
 int getLinkedListLength(LinkedList* list);
 void deleteLinkedList(LinkedList** list);
+int replaceLLElement(LinkedList* list, int index, ListNode element);
 #endif
 
 #ifndef _COMMON_LIST_DEF_

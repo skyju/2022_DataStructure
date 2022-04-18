@@ -7,7 +7,7 @@
 LinkedList* createLinkedList() {
 	LinkedList *result = NULL;
 
-	result = (LinkedList *)malloc(sizeof(LinkedList));
+	result = malloc(sizeof(LinkedList));
 	if (!result) {
 		printf("[error : createLinkedList] Memory allocation failed.\n");
 		return (NULL);
@@ -15,10 +15,30 @@ LinkedList* createLinkedList() {
 
 	//초기화 진행
 	result->currentElementCount = 0;
-	//0으로 초기화 (garbage값 오류 문제 해결을 위해)
-	memset(result, 0, sizeof(LinkedList));
-	
 	return (result);
+}
+
+// 추가: 원소 대체 함수
+int replaceLLElement(LinkedList* list, int index, ListNode element)
+{
+	ListNode* tmp;
+	
+	if (list == NULL) {
+		printf("[error : replaceLLElement] LinkedList is Null.\n");
+		return (FALSE);
+	}
+	if (index < 0 || index > list->currentElementCount) {
+		printf("[error : replaceLLElement] Invalid index.\n");
+		return (FALSE);
+	}
+
+	tmp = &(list->head);
+	for (int i = 0; i <= index; i++) {
+		 tmp = tmp->next;
+	}
+	tmp->data = element.data;
+
+	return (TRUE);
 }
 
 // 2. 원소 추가 함수
@@ -35,7 +55,7 @@ int addLLElement(LinkedList* list, int index, ListNode element) {
 		printf("[error : addLLElement] Invalid index.\n");
 		return (FALSE);
 	}
-	new_Node = (ListNode*)malloc(sizeof(ListNode));
+	new_Node = (ListNode*)malloc(sizeof(ListNode*));
 	if (!new_Node) {
 		printf("[error : addLLElement] Memory allocation failed.\n");
 		return (FALSE);
@@ -103,7 +123,7 @@ ListNode* getLLElement(LinkedList* list, int index) {
 	}
 	
 	result = &(list->head);
-	for (int i = 0; i < index; i++) {
+	for (int i = 0; i <= index; i++) {
 		result = result->next;
 	}
 
@@ -130,14 +150,21 @@ void displayLinkedList(LinkedList* list) {
 
 // 6. 연결 리스트 초기화 함수
 void clearLinkedList(LinkedList* list) {
+	ListNode *tmp = NULL;
+	ListNode *tmp2 = NULL;
+
 	if (list == NULL) {
 		printf("[error : clearLinkedList] LinkedList is Null.\n");
 		return ;
 	}
-	while (list->head.next) {
-		ListNode *tmp = &(list->head);
-		list->head = *(list->head.next);
-		free(tmp->next);
+	tmp = &(list->head);
+	for (int i = 0; i < list->currentElementCount - 1 ; i++) {
+		tmp = tmp->next;
+		tmp2 = tmp;
+		// tail node 안둬서.. 맨 끝까지 찾은 후에 next를 free할 수 없음
+		if (i != list->currentElementCount - 2) {
+			free(tmp2->next);
+		}
 	}
 	list->currentElementCount = 0;
 }

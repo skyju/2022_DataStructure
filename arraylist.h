@@ -22,6 +22,7 @@ int isArrayListFull(ArrayList* list);
 void clearArrayList(ArrayList* list);
 int getArrayListLength(ArrayList* list);
 void deleteArrayList(ArrayList** list);
+int replaceALElement(ArrayList* list, int index, ArrayListNode element);
 
 #endif
 
