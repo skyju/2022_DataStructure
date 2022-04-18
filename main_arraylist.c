@@ -4,14 +4,14 @@
 #include "arraylist.h"
 
 int main(void) {
-	ArrayList *pList = NULL;
+	ArrayList *list = NULL;
 
 	// 총 9개의 함수 TEST 진행
 
 	// 1. 배열 리스트 생성
-	pList = createArrayList(6);
+	list = createArrayList(6);
 
-	if (pList) {
+	if (list) {
 		printf("----------------\n");
 		printf("배열 리스트 생성완료!\n");
 		printf("----------------\n");
@@ -21,41 +21,56 @@ int main(void) {
 
 		// 2. 원소 추가 진행
 		node.data = 10000;
-		addALElement(pList, 0, node);
+		addALElement(list, 0, node);
 		node.data = 23451234;
-		addALElement(pList, 1, node);
+		addALElement(list, 1, node);
 		node.data = -232;
-		addALElement(pList, 2, node);
+		addALElement(list, 2, node);
 		node.data = 234;
-		addALElement(pList, 3, node);
+		addALElement(list, 3, node);
+		node.data = 425933;
+		addALElement(list, 4, node);
+		node.data = 121;
+		addALElement(list, 5, node);
 		printf("----------------\n");
-		printf("원소 4개 추가\n");
+		printf("원소 6개 추가\n");
 		printf("----------------\n");
 		printf("\n\n");
 
+		printf("invalid index error 발생시키기\n");
+		node.data = 111;
+		addALElement(list, 7, node);
+
 		// 5. 정보 출력
-		displayArrayList(pList);
+		displayArrayList(list);
 		printf("\n\n");
 
 		// 3. 원소 삭제 진행
 		printf("----------------\n");
 		printf("0번째 원소 삭제!\n");
 		printf("----------------\n");
-		removeALElement(pList, 0);
+		removeALElement(list, 0);
+		
+		// 5. 정보 출력
+		displayArrayList(list);
+		printf("\n\n");
+		
+		printf("2번째 원소 삭제!\n");
+		removeALElement(list, 2);
 		printf("\n\n");
 
 		// 5. 정보 출력
-		displayArrayList(pList);
+		displayArrayList(list);
 		printf("\n\n");
 
 		// 4. 특정 인덱스 원소 가져와서 출력해보기
 		printf("----------------\n");
-		printf("%d번째 원소 확인: %d\n", 0, getALElement(pList, 0)->data);
+		printf("%d번째 원소 확인: %d\n", 0, getALElement(list, 0)->data);
 		printf("----------------\n");
 		printf("\n\n");
 
 		// 6. 배열 리스트가 찼는지 확인
-		if (isArrayListFull(pList)) {
+		if (isArrayListFull(list)) {
 			printf("----------------\n");
 			printf("배열 리스트가 꽉 찼습니다!\n");
 			printf("----------------\n");
@@ -72,15 +87,15 @@ int main(void) {
 		printf("원소 3개 추가\n");
 		printf("----------------\n");
 		node.data = 1;
-		addALElement(pList, 3, node);
+		addALElement(list, 3, node);
 		node.data = 1111;
-		addALElement(pList, 4, node);
+		addALElement(list, 4, node);
 		node.data = -9999;
-		addALElement(pList, 5, node);
-		displayArrayList(pList);
+		addALElement(list, 5, node);
+		displayArrayList(list);
 		printf("\n\n");
 
-		if (isArrayListFull(pList)) {
+		if (isArrayListFull(list)) {
 			printf("----------------\n");
 			printf("배열 리스트가 꽉 찼습니다!\n");
 			printf("----------------\n");
@@ -96,13 +111,13 @@ int main(void) {
 		printf("----------------\n");
 		printf("0번째 원소 삭제!\n");
 		printf("----------------\n");
-		removeALElement(pList, 0);
-		displayArrayList(pList);
+		removeALElement(list, 0);
+		displayArrayList(list);
 		printf("\n\n");
 
 		// 8. 현재 배열 리스트의 길이 확인
 		printf("----------------\n");
-		printf("현재 배열리스트의 길이? : %d\n", getArrayListLength(pList));
+		printf("현재 배열리스트의 길이? : %d\n", getArrayListLength(list));
 		printf("----------------\n");
 		printf("\n\n");
 
@@ -110,16 +125,16 @@ int main(void) {
 		printf("----------------\n");
 		printf("배열 리스트 초기화 진행\n");
 		printf("----------------\n");
-		clearArrayList(pList);
-		displayArrayList(pList);
+		clearArrayList(list);
+		displayArrayList(list);
 		printf("\n\n");
 
 		// 9. 배열 리스트 삭제 진행
 		printf("----------------\n");
 		printf("배열 리스트 삭제 진행\n");
 		printf("----------------\n");
-		deleteArrayList(&pList);
-		if (pList) {
+		deleteArrayList(&list);
+		if (list) {
 			printf("배열 리스트 삭제 안됐음!\n");
 		} else {
 			printf("배열 리스트 삭제 완료!\n");

@@ -4,23 +4,23 @@
 typedef struct ListNodeType
 {
 	int data;
-	struct ListNodeType* pLink;
+	struct ListNodeType* next;
 } ListNode;
 
 typedef struct LinkedListType
 {
 	int currentElementCount;	// 현재 저장된 원소의 개수
-	ListNode headerNode;		// 헤더 노드(Header Node)
+	ListNode head;		// 헤더 노드(Header Node)
 } LinkedList;
 
 LinkedList* createLinkedList();
-int addLLElement(LinkedList* pList, int position, ListNode element);
-int removeLLElement(LinkedList* pList, int position);
-ListNode* getLLElement(LinkedList* pList, int position);
-void displayLinkedList(LinkedList* pList);
-void clearLinkedList(LinkedList* pList);
-int getLinkedListLength(LinkedList* pList);
-void deleteLinkedList(LinkedList** pList);
+int addLLElement(LinkedList* list, int index, ListNode element);
+int removeLLElement(LinkedList* list, int index);
+ListNode* getLLElement(LinkedList* list, int index);
+void displayLinkedList(LinkedList* list);
+void clearLinkedList(LinkedList* list);
+int getLinkedListLength(LinkedList* list);
+void deleteLinkedList(LinkedList** list);
 #endif
 
 #ifndef _COMMON_LIST_DEF_

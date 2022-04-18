@@ -23,16 +23,16 @@ LinkedList* createLinkedList() {
 
 // 2. 원소 추가 함수
 // 이전노드와 해당 인덱스 사이의 연결을 끊고 새로운 노드를 사이에 끼워야함!
-int addLLElement(LinkedList* pList, int position, ListNode element) {
-	ListNode* prev_Node; // 이전 노드 (position - 1)
+int addLLElement(LinkedList* list, int index, ListNode element) {
+	ListNode* prev_Node; // 이전 노드 (index - 1)
 	ListNode* new_Node; // 생성 노드
 
-	if (pList == NULL) {
+	if (list == NULL) {
 		printf("[error : addLLElement] LinkedList is Null.\n");
 		return (FALSE);
 	}
-	if (position < 0 || position > pList->currentElementCount) {
-		printf("[error : addLLElement] Invalid position.\n");
+	if (index < 0 || index > list->currentElementCount) {
+		printf("[error : addLLElement] Invalid index.\n");
 		return (FALSE);
 	}
 	new_Node = (ListNode*)malloc(sizeof(ListNode));
@@ -42,116 +42,121 @@ int addLLElement(LinkedList* pList, int position, ListNode element) {
 	}
 		
 	// 이전 노드 setting
-	// position이 0인 경우 때문에 우선 헤더 노드 주소값을 넣어놓음
-	prev_Node = &(pList->headerNode);
-	for (int i = 0; i < position; i++) {
-		prev_Node = prev_Node->pLink;
+	// index이 0인 경우 때문에 우선 헤더 노드 주소값을 넣어놓음
+	prev_Node = &(list->head);
+	for (int i = 0; i < index; i++) {
+		prev_Node = prev_Node->next;
 	}
 	
 	// 생성 노드 할당 및 새로운 연결해주기
 	*new_Node = element;
-	new_Node->pLink = prev_Node->pLink;
-	prev_Node->pLink = new_Node;
-	pList->currentElementCount += 1;
+	new_Node->next = prev_Node->next;
+	prev_Node->next = new_Node;
+	list->currentElementCount += 1;
 	
 	return (TRUE);
 }
 
 // 3. 원소 삭제 함수
-int removeLLElement(LinkedList* pList, int position) {
-	ListNode* prev_Node; // 이전 노드 (position - 1)
+int removeLLElement(LinkedList* list, int index) {
+	ListNode* prev_Node; // 이전 노드 (index - 1)
 	ListNode* del_Node; // 삭제할 노드
 
-	if (pList == NULL) {
+	if (list == NULL) {
 		printf("[error : removeLLElement] LinkedList is Null.\n");
 		return (FALSE);
 	}
-	if (position < 0 || position >= pList->currentElementCount) {
-		printf("[error : removeLLElement] Invalid position.\n");
+	if (index < 0 || index >= list->currentElementCount) {
+		printf("[error : removeLLElement] Invalid index.\n");
 		return (FALSE);
 	}
 	
 	// 노드 삭제 및 새로운 연결해주기
-	prev_Node = &(pList->headerNode);
-	if (position == 0) {
-		pList->headerNode = *(prev_Node->pLink);
-		free(prev_Node->pLink);
+	prev_Node = &(list->head);
+	if (index == 0) {
+		list->head = *(prev_Node->next);
+		free(prev_Node->next);
 	} else {
-		for (int i = 0 ; i < position - 1; i++) {
-			prev_Node = prev_Node->pLink;
+		for (int i = 0 ; i < index; i++) {
+			prev_Node = prev_Node->next;
 		}
-		del_Node = prev_Node->pLink;
-		prev_Node->pLink = del_Node->pLink;
+		del_Node = prev_Node->next;
+		prev_Node->next = del_Node->next;
 		free(del_Node);
 	}
-	pList->currentElementCount -= 1;
-	
+	list->currentElementCount -= 1;
+
 	return (TRUE);
 }
 
 // 4. 연결 리스트에서 특정 인덱스의 원소를 가져오는 함수
-ListNode* getLLElement(LinkedList* pList, int position) {
+ListNode* getLLElement(LinkedList* list, int index) {
 	ListNode* result = NULL;
 
-	if (pList == NULL) {
+	if (list == NULL) {
 		printf("[error : getLLElement] LinkedList is Null.\n");
 		return (FALSE);
 	}
-	if (position < 0 || position >= pList->currentElementCount) {
-		printf("[error : getLLElement] Invalid position.\n");
+	if (index < 0 || index >= list->currentElementCount) {
+		printf("[error : getLLElement] Invalid index.\n");
 		return (NULL);
 	}
 	
-	result = &(pList->headerNode);
-	for (int i = 0; i < position; i++) {
-		result = result->pLink;
+	result = &(list->head);
+	for (int i = 0; i < index; i++) {
+		result = result->next;
 	}
 
 	return (result);
 }
 
 // 5. 연결 리스트의 정보 출력 함수
-void displayLinkedList(LinkedList* pList) {
-	if (pList == NULL) {
+void displayLinkedList(LinkedList* list) {
+	ListNode* tmp = NULL;
+
+	if (list == NULL) {
 		printf("[error : displayLinkedList] LinkedList is Null.\n");
 		return ;
 	}
-	printf("Current Element Count : %d\n", pList->currentElementCount);
+
+	printf("Current Element Count : %d\n", list->currentElementCount);
 	printf("----[element display]----\n");
-	for (int i = 0; i < pList->currentElementCount; i++) {
-		printf("[%d]'s element : %d\n", i, getLLElement(pList, i)->data);
+	tmp = &(list->head);
+	for (int i = 0; i < list->currentElementCount; i++) {
+		tmp = tmp->next;
+		printf("[%d]'s element : %d\n", i, tmp->data);
 	}
 }
 
 // 6. 연결 리스트 초기화 함수
-void clearLinkedList(LinkedList* pList) {
-	if (pList == NULL) {
+void clearLinkedList(LinkedList* list) {
+	if (list == NULL) {
 		printf("[error : clearLinkedList] LinkedList is Null.\n");
 		return ;
 	}
-	while (pList->headerNode.pLink) {
-		ListNode *tmp = &(pList->headerNode);
-		pList->headerNode = *(pList->headerNode.pLink);
-		free(tmp->pLink);
+	while (list->head.next) {
+		ListNode *tmp = &(list->head);
+		list->head = *(list->head.next);
+		free(tmp->next);
 	}
-	pList->currentElementCount = 0;
+	list->currentElementCount = 0;
 }
 
 // 7. 연결 리스트의 길이를 리턴하는 함수
-int getLinkedListLength(LinkedList* pList) {
-	if (pList == NULL) {
+int getLinkedListLength(LinkedList* list) {
+	if (list == NULL) {
 		printf("[error : getLinkedListLength] LinkedList is Null.\n");
 		return (FALSE);
 	}
-	return (pList->currentElementCount);
+	return (list->currentElementCount);
 }
 
 // 8. 연결 리스트 삭제 함수
-void deleteLinkedList(LinkedList** pList) {
-	if (pList == NULL) {
+void deleteLinkedList(LinkedList** list) {
+	if (list == NULL) {
 		printf("[error : deleteLinkedList] LinkedList is Null.\n");
 		return ;
 	}
-	free(*pList);
-	*pList = NULL;
+	free(*list);
+	*list = NULL;
 }

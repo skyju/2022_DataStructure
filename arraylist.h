@@ -10,18 +10,18 @@ typedef struct ArrayListType
 {
 	int maxElementCount;		// 최대 원소 개수
 	int currentElementCount;	// 현재 원소의 개수
-	ArrayListNode *pElement;	// 원소 저장을 위한 1차원 배열
+	ArrayListNode *array;	// 원소 저장을 위한 1차원 배열
 } ArrayList;
 
 ArrayList* createArrayList(int maxElementCount);
-int addALElement(ArrayList* pList, int position, ArrayListNode element);
-int removeALElement(ArrayList* pList, int position);
-ArrayListNode* getALElement(ArrayList* pList, int position);
-void displayArrayList(ArrayList* pList);
-int isArrayListFull(ArrayList* pList);
-void clearArrayList(ArrayList* pList);
-int getArrayListLength(ArrayList* pList);
-void deleteArrayList(ArrayList** pList);
+int addALElement(ArrayList* list, int index, ArrayListNode element);
+int removeALElement(ArrayList* list, int index);
+ArrayListNode* getALElement(ArrayList* list, int index);
+void displayArrayList(ArrayList* list);
+int isArrayListFull(ArrayList* list);
+void clearArrayList(ArrayList* list);
+int getArrayListLength(ArrayList* list);
+void deleteArrayList(ArrayList** list);
 
 #endif
 
