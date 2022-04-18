@@ -27,7 +27,7 @@ int replaceLLElement(LinkedList* list, int index, ListNode element)
 		printf("[error : replaceLLElement] LinkedList is Null.\n");
 		return (FALSE);
 	}
-	if (index < 0 || index > list->currentElementCount) {
+	if (index < 0 || index >= list->currentElementCount) {
 		printf("[error : replaceLLElement] Invalid index.\n");
 		return (FALSE);
 	}
