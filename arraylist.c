@@ -46,6 +46,8 @@ int replaceALElement(ArrayList* list, int index, ArrayListNode element)
 		return (FALSE);
 	}
 	list->array[index] = element;
+	
+	return (TRUE);
 }
 
 // 2. 원소 추가 함수
