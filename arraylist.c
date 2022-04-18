@@ -56,11 +56,7 @@ int addALElement(ArrayList* list, int index, ArrayListNode element) {
 		printf("[error : addALElement] ArrayList is Null.\n");
 		return (FALSE);
 	}
-	if (isArrayListFull(list)) {
-		printf("[error : addALElement] Exceeds array size.\n");
-		return (FALSE);
-	}
-	if (index < 0 || index > list->currentElementCount) {
+	if (index < 0 || index >= list->currentElementCount) {
 		printf("[error : addALElement] Invalid index.\n");
 		return (FALSE);
 	}
