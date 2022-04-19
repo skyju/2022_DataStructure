@@ -161,7 +161,7 @@ void clearLinkedList(LinkedList* list) {
 	for (int i = 0; i < list->currentElementCount - 1 ; i++) {
 		tmp = tmp->next;
 		tmp2 = tmp;
-		// tail node 안둬서.. 맨 끝까지 찾은 후에 next를 free할 수 없음
+		// 맨끝 노드의 next는 null이라 free할 수 없음
 		if (i != list->currentElementCount - 2) {
 			free(tmp2->next);
 		}
