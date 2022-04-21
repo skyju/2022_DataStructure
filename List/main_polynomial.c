@@ -1,4 +1,5 @@
 #include "polynomial.h"
+#include "polynomial.c"
 
 int main(void)
 {
@@ -9,18 +10,25 @@ int main(void)
 	a = createPolyList();
 	b = createPolyList();
 
-	if (!a && !b)
+	if (a != NULL && b != NULL)
 	{
-		addPolyListNodeLast(a, 7, 6);
-		addPolyListNodeLast(a, 3, 5);
-		addPolyListNodeLast(a, 5, 2);
+		addPolyNodeLast(a, 7, 6);
+		addPolyNodeLast(a, 3, 5);
+		addPolyNodeLast(a, 5, 2);
+		addPolyNodeLast(a, 12, 7);
+		addPolyNodeLast(a, 4, 0);
+		addPolyNodeLast(a, 2, 4);
+		printf("a list!\n");
 		displayPolyList(a);
+		printf("\n\n");
 
-		addPolyListNodeLast(b, 1, 5);
-		addPolyListNodeLast(b, 2, 4);
-		addPolyListNodeLast(b, 3, 2);
-		addPolyListNodeLast(b, 4, 0);
+		addPolyNodeLast(b, 1, 5);
+		addPolyNodeLast(b, 2, 4);
+		addPolyNodeLast(b, 3, 2);
+		addPolyNodeLast(b, 2, 7);
+		printf("b list!\n");
 		displayPolyList(b);
+		printf("\n\n");
 
 		c = polyAddCal(a, b);
 		displayPolyList(c);

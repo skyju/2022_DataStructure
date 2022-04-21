@@ -12,8 +12,8 @@ CircularList *createCircularList()
 		return (NULL);
 	}
 
-	result->currentCount = 0;
-	result->head.next = result;
+	result->currentElementCount = 0;
+	result->head.next = &(result->head);
 	return (result);
 }
 
@@ -46,15 +46,16 @@ int replaceCLElement(CircularList *list, int index, CircularListNode element)
 // 원소 추가
 int addCLElement(CircularList *list, int index, CircularListNode element)
 {
-	CircularListNode prev_Node;
-	CircularListNode new_Node;
+	CircularListNode* prev_Node;
+	CircularListNode* new_Node;
+	CircularListNode* last_Node;
 
 	if (list == NULL)
 	{
 		printf("[error : addCLElement] CirculrList is NULL.\n");
 		return (FALSE);
 	}
-	if (index < 0 || index > list->currentCount)
+	if (index < 0 || index > list->currentElementCount)
 	{
 		printf("[error : addCLElement] Invalid index\n");
 		return (FALSE);
@@ -66,20 +67,29 @@ int addCLElement(CircularList *list, int index, CircularListNode element)
 		return (FALSE);
 	}
 
-	// 이전 노드 찾기
-	prev_Node = &(list->head);
-	for (i = 0; i < index; i++)
-		prev_Node = prev_Node->next;
-
-	// 생성노드 할당 및 새로운 연결해주기
 	*new_Node = element;
-	new_Node->next = prev_Node->next;
-	prev_Node->next = new_Node;
+	new_Node->next = NULL;
+	if (index == 0) {
+		if (getCircularListLength(list) == 0) {
+			list->head.next = new_Node;
+			new_Node->next = new_Node;
+		} else {
+			last_Node = list->head.next;
+			while (last_Node->next != list->head.next)
+				last_Node = last_Node->next;
+			list->head.next = new_Node;
+			new_Node->next = last_Node->next;
+			last_Node->next = new_Node;
+		}
+	} else {
+		prev_Node = &(list->head);
+		for (int i = 0; i < index; i++)
+			prev_Node = prev_Node->next;
 
-	// 맨 처음 노드가 추가된 경우, 다음 노드 자기자신으로 지정
-	if (prev_Node->next == NULL)
-		new_Node->next = new_Node;
-	list->currentCount += 1;
+		new_Node->next = prev_Node->next;
+		prev_Node->next = new_Node;
+	}
+	list->currentElementCount += 1;
 
 	return (TRUE);
 }
@@ -87,41 +97,39 @@ int addCLElement(CircularList *list, int index, CircularListNode element)
 // 원소 삭제
 int removeCLElement(CircularList *list, int index)
 {
-	CircularListNode prev_Node;
-	CircularListNode del_Node;
+	CircularListNode* prev_Node;
+	CircularListNode* del_Node;
 
-	if (list == NULL)
-	{
+	if (list == NULL) {
 		printf("[error : removeCLElement] CircularList is Null.\n");
 		return (FALSE);
 	}
-	if (index < 0 || index >= list->currentCount)
-	{
+	if (index < 0 || index >= list->currentElementCount) {
 		printf("[error : removeCLElement] Invalid index\n");
 		return (FALSE);
 	}
 
 	// 노드 삭제 및 새로운 연결해주기
 	prev_Node = &(list->head);
-	if (index == 0)
-	{
-		list->head = *(prev_Node->next);
-		free(prev_Node->next);
-	}
-	else
-	{
-		for (int i = 0; i < index; i++)
+	if (index == 0) {
+		// 마지막 남은 노드가 삭제된 경우 헤더 노드를 NULL로 지정
+		if (getCircularListLength(list) == 1) {
+			free(prev_Node->next);
+			list->head.next = NULL;
+		}
+		else {
+			list->head = *(prev_Node->next);
+			free(prev_Node->next);
+		}
+	} else {
+		for (int i = 0; i < index; i++) {
 			prev_Node = prev_Node->next;
+		}
 		del_Node = prev_Node->next;
 		prev_Node->next = del_Node->next;
 		free(del_Node);
 	}
-
-	// 마지막 남은 노드가 삭제된 경우 헤더 노드를 NULL로 지정
-	if (list->currentCount == 0)
-		list->head->next = NULL;
-
-	list->currentCount -= 1;
+	list->currentElementCount -= 1;
 
 	return (TRUE);
 }
@@ -136,7 +144,7 @@ CircularListNode *getCLElement(CircularList *list, int index)
 		printf("[error : getCLElement] CircularList is Null.\n");
 		return (FALSE);
 	}
-	if (index < 0 || index >= list->currentCount)
+	if (index < 0 || index >= list->currentElementCount)
 	{
 		printf("[error : getCLElement] Invalid index\n");
 		return (FALSE);
@@ -157,13 +165,13 @@ void displayCircularList(CircularList *list)
 		printf("[error : displayCircularList] CircularList is Null.\n");
 		return;
 	}
-	printf("Current Element Count : %d\n", list->currentCount);
+	printf("Current Element Count : %d\n", list->currentElementCount);
 	printf("----[element display]----\n");
 	tmp = &(list->head);
 	for (int i = 0; i < list->currentElementCount; i++)
 	{
-		printf("[%d]'s element : %d\n", i, tmp->data);
 		tmp = tmp->next;
+		printf("[%d]'s element : %d\n", i, tmp->data);
 	}
 }
 
@@ -185,7 +193,7 @@ void clearCircularList(CircularList *list)
 		tmp2 = tmp;
 		free(tmp2->next);
 	}
-	list->currentCount = 0;
+	list->currentElementCount = 0;
 }
 
 // 길이
@@ -196,7 +204,7 @@ int getCircularListLength(CircularList *list)
 		printf("[error : getCircularListLength] CircularList is Null.\n");
 		return (FALSE);
 	}
-	return (list->currentCount);
+	return (list->currentElementCount);
 }
 
 // 삭제
@@ -207,7 +215,7 @@ void deleteCircularList(CircularList **list)
 		printf("[error : deleteCircularList] CircularList is Null.\n");
 		return;
 	}
-	while ((*list)->currentCount > 0)
+	while ((*list)->currentElementCount > 0)
 		removeCLElement(*list, 0);
 	free(*list);
 	*list = NULL;

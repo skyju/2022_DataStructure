@@ -1,82 +1,115 @@
 #include "polynomial.h"
 
-PolyList *createPolyList()
+PolyList* createPolyList()
 {
 	PolyList *result = NULL;
 
-	result = malloc(sizeof(PolyList));
-	if (!result)
-	{
+	result = (PolyList *)malloc(sizeof(PolyList));
+	if (!result) {
 		printf("[error : createPolyList] Memory allocation failed.\n");
 		return (NULL);
 	}
 
-	//초기화 진행
 	result->currentElementCount = 0;
+	result->head.next = NULL;
 	return (result);
 }
 
-// 바뀜
-int addPolyListData(PolyList *list, int index, Term data)
+// 추가
+int addPLElement(PolyList *list, int index, PolyListNode element)
 {
-	PolyListNode *prev_Node;
-	PolyListNode *new_Node;
+	PolyListNode* prev_Node;
+	PolyListNode* new_Node;
 
-	if (list == NULL)
-	{
+	if (list == NULL) {
 		printf("[error : addPolyListData] PolyList is Null.\n");
 		return (FALSE);
 	}
-	if (index < 0 || index > list->currentElementCount)
-	{
+	if (index < 0 || index > list->currentElementCount) {
 		printf("[error : addPolyListData] Invalid index.\n");
 		return (FALSE);
 	}
 	new_Node = (PolyListNode *)malloc(sizeof(PolyListNode *));
-	if (!new_Node)
-	{
+	if (!new_Node) {
 		printf("[error : addPolyListData] Memory allocation failed.\n");
 		return (FALSE);
 	}
 
+	// 이전 노드 setting
+	// index이 0인 경우 때문에 우선 헤더 노드 주소값을 넣어놓음
 	prev_Node = &(list->head);
-	for (int i = 0; i < index; i++)
-	{
+	for (int i = 0; i < index; i++) {
 		prev_Node = prev_Node->next;
 	}
-
-	new_Node->data = data;
-	new_Node->next = prev_Node->next;
-	prev_Node->next = new_Node;
+	
+	// 생성 노드 할당 및 새로운 연결해주기
+	*new_Node = element;
+	if (index == list->currentElementCount) { // 마지막 노드 추가인 경우
+		new_Node->next = NULL;
+		prev_Node->next = new_Node;
+	} else {
+		new_Node->next = prev_Node->next;
+		prev_Node->next = new_Node;
+	}
 	list->currentElementCount += 1;
 
 	return (TRUE);
 }
 
-int addPolyListNodeLast(PolyList *list, double coef, int degree)
+int addPolyNodeLast(PolyList *list, double coef, int degree)
 {
 	int index;
-	Term term = {
-		0,
-	};
+	PolyListNode* new_Node;
 
-	if (list == NULL)
-	{
-		printf("[error : addPolyListNodeLast] PolyList is Null.\n");
+	if (list == NULL) {
+		printf("[error : addPolyNodeLast] PolyList is Null.\n");
 		return (FALSE);
 	}
+	new_Node = (PolyListNode *)malloc(sizeof(PolyListNode *));
+	if (!new_Node) {
+		printf("[error : addPolyNodeLast] Memory allocation failed.\n");
+		return (FALSE);
+	}
+	
+	(*new_Node).coef = coef;
+	(*new_Node).degree = degree;
+	index = getPolyListLength(list);
+	return (addPLElement(list, index, *new_Node));
+}
 
-	term.coef = coef;
-	term.degree = degree;
-	index = list->currentElementCount;
-	return (addPolyListData(list, index, term));
+PolyList *PolyListSort(PolyList *list)
+{
+    for (int i = 0; i < list->currentElementCount; i++) {
+    	PolyListNode *prev = list->head.next;
+    	PolyListNode *curr = list->head.next->next;
+    	if (curr) {
+    	do {
+        	if (curr->degree > prev->degree){
+           		int temp2 = curr->degree;
+           		curr->degree = prev->degree;
+           		prev->degree = temp2;
+	            int temp3 = curr->coef;
+    	        curr->coef = prev->coef;
+        	    prev->coef = temp3;
+
+     	    	prev = &(list->head);
+        	    curr = list->head.next;
+        	}
+            prev = prev->next;
+            curr = curr->next;
+        } while(curr);
+    	}
+    }
+    return (list);
 }
 
 PolyList *polyAddCal(PolyList *a, PolyList *b)
 {
 	PolyList *result;
-	PolyListNode *a_node, *b_node;
-	int coef_sum;
+	PolyListNode *a_node;
+	PolyListNode *b_node;
+	int b_node_cnt = b->currentElementCount;
+	int	a_node_cnt = a->currentElementCount;
 
 	if (a == NULL && b == NULL)
 	{
@@ -90,48 +123,38 @@ PolyList *polyAddCal(PolyList *a, PolyList *b)
 		return (NULL);
 	}
 
-	a_node = a->head.next;
-	b_node = b->head.next;
-	while (a_node != NULL && b_node != NULL)
-	{
-		int a_degree = a_node->data.degree;
-		int b_degree = b_node->data.degree;
-		if (a_degree > b_degree)
-		{
-			coef_sum = a_node->data.coef;
-			addPolyListNodeLast(result, coef_sum, a_degree);
+	a_node = PolyListSort(a)->head.next;
+	b_node = PolyListSort(b)->head.next;
+	while (a_node_cnt > 0 && b_node_cnt > 0) {
+		int a_degree = a_node->degree;
+		int b_degree = b_node->degree;
+		if (a_degree > b_degree) {
+			addPolyNodeLast(result, a_node->coef, a_degree);
 			a_node = a_node->next;
-		}
-		else if (a_degree == b_degree)
-		{
-			coef_sum = a_node->data.coef + b_node->data.coef;
-			addPolyListNodeLast(result, coef_sum, a_degree);
+		} else if (a_degree == b_degree) {
+			addPolyNodeLast(result, a_node->coef + b_node->coef, a_degree);
 			a_node = a_node->next;
 			b_node = b_node->next;
-		}
-		else // A의 차수 < B의 차수
-		{
-			coef_sum = b_node->data.coef;
-			addPolyListNodeLast(result, coef_sum, b_degree);
+		} else {
+			addPolyNodeLast(result, b_node->coef, b_degree);
 			b_node = b_node->next;
 		}
-	}
-
-	// 잔존처리
-	while (a_node != NULL)
-	{
-		coef_sum = a_node->data.coef;
-		addPolyListNodeLast(result, coef_sum, a_node->data.degree);
-		a_node = a_node->next;
+		a_node_cnt -= 1;
+		b_node_cnt -= 1;
 	}
 	
-	while (b_node != NULL)
-	{
-		coef_sum = b_node->data.coef;
-		addPolyListNodeLast(result, coef_sum, b_node->data.degree);
-		b_node = b_node->next;
+	// 잔존처리
+	while (a_node_cnt > 0) {
+		addPolyNodeLast(result, a_node->coef, a_node->degree);
+		a_node = a_node->next;
+		a_node_cnt -= 1;
 	}
-
+	
+	while (b_node_cnt > 0) {
+		addPolyNodeLast(result, b_node->coef, b_node->degree);
+		b_node = b_node->next;
+		b_node_cnt -= 1;
+	}
 	return (result);
 }
 
@@ -195,22 +218,26 @@ PolyListNode *getPLElement(PolyList *list, int index)
 }
 void displayPolyList(PolyList *list)
 {
-	PolyListNode *tmp = NULL;
+	PolyListNode* tmp = NULL;
 
-	if (list == NULL)
-	{
+	if (list == NULL) {
 		printf("[error : displayPolyList] PolyList is Null.\n");
 		return;
 	}
-
-	printf("Current Element Count : %d\n", list->currentElementCount);
-	printf("----[element display]----\n");
+	printf("COUNT: %d\n", list->currentElementCount);
+	printf("----[display]----\n");
 	tmp = &(list->head);
 	for (int i = 0; i < list->currentElementCount; i++)
 	{
 		tmp = tmp->next;
-		printf("%.1fx^%d\n", tmp->data.coef, tmp->data.degree);
+		if (tmp != NULL) {
+			if (i > 0) {
+				printf(" + ");
+			}
+			printf("%.1fx^%d", tmp->coef, tmp->degree);
+		}
 	}
+	printf("\n");
 }
 
 void clearPolyList(PolyList *list)
@@ -253,32 +280,4 @@ void deletePolyList(PolyList **list)
 		removePLElement(*list, 0);
 	free(*list);
 	*list = NULL;
-}
-
-int main(void)
-{
-	PolyList *a = NULL;
-	PolyList *b = NULL;
-	PolyList *c = NULL;
-
-	a = createPolyList();
-	b = createPolyList();
-
-	if (!a && !b)
-	{
-		addPolyListNodeLast(a, 7, 6);
-		addPolyListNodeLast(a, 3, 5);
-		addPolyListNodeLast(a, 5, 2);
-		displayPolyList(a);
-		printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-
-		addPolyListNodeLast(b, 1, 5);
-		addPolyListNodeLast(b, 2, 4);
-		addPolyListNodeLast(b, 3, 2);
-		addPolyListNodeLast(b, 4, 0);
-		displayPolyList(b);
-
-		c = polyAddCal(a, b);
-		displayPolyList(c);
-	}
 }

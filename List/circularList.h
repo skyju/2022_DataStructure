@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef struct CircularListNodeType
 {
@@ -12,7 +13,7 @@ typedef struct CircularListNodeType
 
 typedef struct CircularListType
 {
-	int currentCount;	// 현재 저장된 원소의 개수
+	int currentElementCount;	// 현재 저장된 원소의 개수
 	CircularListNode head;		// 헤더 노드(Header Node)
 } CircularList;
 

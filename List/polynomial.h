@@ -4,15 +4,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct TermType
+typedef struct LinkedListNodeType
 {
 	double coef;
 	int	degree;
-} Term;
-
-typedef struct LinkedListNodeType
-{
-	Term data;
 	struct LinkedListNodeType* next;
 } PolyListNode;
 
@@ -23,7 +18,7 @@ typedef struct LinkedListType
 } PolyList;
 
 PolyList* createPolyList();
-int addPolyListData(PolyList* list, int index, Term data);
+int addPLElement(PolyList* list, int index, PolyListNode data);
 int removePLElement(PolyList* list, int index);
 PolyListNode* getPLElement(PolyList* list, int index);
 void displayPolyList(PolyList* list);
@@ -31,7 +26,7 @@ void clearPolyList(PolyList* list);
 int getPolyListLength(PolyList* list);
 void deletePolyList(PolyList** list);
 
-int addPolyListNodeLast(PolyList* list, double coef, int degree);
+int addPolyNodeLast(PolyList* list, double coef, int degree);
 PolyList* polyAddCal(PolyList* a, PolyList* b);
 #endif
 
