@@ -48,49 +48,31 @@ int addCLElement(CircularList *list, int index, CircularListNode element)
 {
 	CircularListNode* prev_Node;
 	CircularListNode* new_Node;
-	CircularListNode* last_Node;
 
-	if (list == NULL)
-	{
+	if (list == NULL) {
 		printf("[error : addCLElement] CirculrList is NULL.\n");
 		return (FALSE);
 	}
-	if (index < 0 || index > list->currentElementCount)
-	{
+	if (index < 0 || index > list->currentElementCount) {
 		printf("[error : addCLElement] Invalid index\n");
 		return (FALSE);
 	}
-	new_Node = (CircularListNode *)malloc(sizeof(CircularListNode *));
-	if (!new_Node)
-	{
+	new_Node = (CircularListNode *)malloc(sizeof(CircularListNode));
+	if (!new_Node) {
 		printf("[error : addCLElement] Memory allocation failed\n");
 		return (FALSE);
 	}
 
 	*new_Node = element;
-	new_Node->next = NULL;
-	if (index == 0) {
-		if (getCircularListLength(list) == 0) {
-			list->head.next = new_Node;
-			new_Node->next = new_Node;
-		} else {
-			last_Node = list->head.next;
-			while (last_Node->next != list->head.next)
-				last_Node = last_Node->next;
-			list->head.next = new_Node;
-			new_Node->next = last_Node->next;
-			last_Node->next = new_Node;
-		}
-	} else {
-		prev_Node = &(list->head);
-		for (int i = 0; i < index; i++)
-			prev_Node = prev_Node->next;
-
-		new_Node->next = prev_Node->next;
-		prev_Node->next = new_Node;
+	prev_Node = &(list->head);
+	for (int i = 0; i < index ; i++)
+		prev_Node = prev_Node->next;
+	new_Node->next = prev_Node->next;
+	prev_Node->next = new_Node;
+	list->currentElementCount++;
+	if (new_Node->next == NULL) {
+		new_Node->next = new_Node;
 	}
-	list->currentElementCount += 1;
-
 	return (TRUE);
 }
 
@@ -109,27 +91,18 @@ int removeCLElement(CircularList *list, int index)
 		return (FALSE);
 	}
 
-	// 노드 삭제 및 새로운 연결해주기
 	prev_Node = &(list->head);
-	if (index == 0) {
-		// 마지막 남은 노드가 삭제된 경우 헤더 노드를 NULL로 지정
-		if (getCircularListLength(list) == 1) {
-			free(prev_Node->next);
-			list->head.next = NULL;
-		}
-		else {
-			list->head = *(prev_Node->next);
-			free(prev_Node->next);
-		}
-	} else {
-		for (int i = 0; i < index; i++) {
-			prev_Node = prev_Node->next;
-		}
-		del_Node = prev_Node->next;
-		prev_Node->next = del_Node->next;
-		free(del_Node);
-	}
-	list->currentElementCount -= 1;
+
+	for (int i = 0; i < index; i++)
+		prev_Node = prev_Node->next;
+
+	del_Node = prev_Node->next;
+	prev_Node->next = del_Node->next;
+	list->currentElementCount--;
+
+	if (list->currentElementCount == 0)
+		list->head.next = NULL;
+	free(del_Node);
 
 	return (TRUE);
 }
@@ -178,22 +151,14 @@ void displayCircularList(CircularList *list)
 // 초기화
 void clearCircularList(CircularList *list)
 {
-	CircularListNode *tmp;
-	CircularListNode *tmp2;
-
-	if (list == NULL)
-	{
+	if (list == NULL) {
 		printf("[error : clearCircularList] CircularList is Null.\n");
 		return;
 	}
-	tmp = &(list->head);
-	while (tmp->next != NULL)
-	{
-		tmp = tmp->next;
-		tmp2 = tmp;
-		free(tmp2->next);
+	int cnt = list->currentElementCount;
+	for (int i = 0; i < cnt; i++) {
+		removeCLElement(list, 0);
 	}
-	list->currentElementCount = 0;
 }
 
 // 길이

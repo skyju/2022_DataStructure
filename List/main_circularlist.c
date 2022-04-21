@@ -37,7 +37,6 @@ int main(void) {
 		node.data = 111;
 		addCLElement(list, 7, node);
 
-		// 5. 정보 출력
 		displayCircularList(list);
 		printf("\n\n");
 
@@ -94,13 +93,11 @@ int main(void) {
 		displayCircularList(list);
 		printf("\n\n");
 
-		// 8. 현재 배열 리스트의 길이 확인
 		printf("----------------\n");
 		printf("현재 리스트의 길이? : %d\n", getCircularListLength(list));
 		printf("----------------\n");
 		printf("\n\n");
 
-		// 7. 배열 리스트 초기화 진행
 		printf("----------------\n");
 		printf("리스트 초기화 진행\n");
 		printf("----------------\n");
@@ -108,9 +105,8 @@ int main(void) {
 		displayCircularList(list);
 		printf("\n\n");
 
-		// 9. 배열 리스트 삭제 진행
 		printf("----------------\n"); 
-		printf("리스트 삭제 진행\n");
+		printf("원형 리스트 삭제 진행\n");
 		printf("----------------\n");
 		deleteCircularList(&list);
 		if (list) {
@@ -119,5 +115,5 @@ int main(void) {
 			printf("리스트 삭제 완료!\n");
 		}
 	}
-	system("leaks a.out");
+	//system("leaks a.out");
 }

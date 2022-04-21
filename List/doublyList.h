@@ -13,14 +13,14 @@ typedef struct DoublyListNodeType
 
 typedef struct DoublyListType
 {
-	int currentElementCount;	// 현재 저장된 원소의 개수
-	ListNode head;		// 헤더 노드(Header Node)
+	int currentElementCount;
+	DoublyListNode head;
 } DoublyList;
 
 DoublyList* createDoublyList();
 int addDLElement(DoublyList* list, int index, DoublyListNode element);
 int removeDLElement(DoublyList* list, int index);
-DoublyList* getDLElement(DoublyList* list, int index);
+DoublyListNode* getDLElement(DoublyList* list, int index);
 void displayDoublyList(DoublyList* list);
 void clearDoublyList(DoublyList* list);
 int getDoublyListLength(DoublyList* list);
