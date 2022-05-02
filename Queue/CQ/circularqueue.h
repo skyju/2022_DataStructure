@@ -1,6 +1,9 @@
 #ifndef _CIRCULAR_QUEUE_
 #define _CIRCULAR_QUEUE_
 
+#include <stdio.h>
+#include <stdlib.h>
+
 typedef struct CircularQueueNodeType
 {
 	char data;
@@ -8,11 +11,11 @@ typedef struct CircularQueueNodeType
 
 typedef struct CircularQueueType
 {
-	int maxElementCount;		// ÃÖ´ë ¿ø¼Ò °³¼ö
-	int currentElementCount;	// ÇöÀç ¿ø¼ÒÀÇ °³¼ö
-	int front;					// front À§Ä¡
-	int rear;					// rear À§Ä¡
-	CircularQueueNode *pElement;	// ³ëµå ÀúÀåÀ» À§ÇÑ 1Â÷¿ø ¹è¿­ Æ÷ÀÎÅÍ
+	int maxElementCount;		// ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	int currentElementCount;	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	int front;					// front ï¿½ï¿½Ä¡
+	int rear;					// rear ï¿½ï¿½Ä¡
+	CircularQueueNode *pElement;	// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 } CircularQueue;
 
 CircularQueue* createCircularQueue(int maxElementCount);
@@ -23,7 +26,6 @@ void deleteCircularQueue(CircularQueue* pQueue);
 int isCircularQueueFull(CircularQueue* pQueue);
 int isCircularQueueEmpty(CircularQueue* pQueue);
 void displayCircularQueue(CircularQueue *pQueue);
-void displayQueue(CircularQueue *pQueue);
 
 #endif
 

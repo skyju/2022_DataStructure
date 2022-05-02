@@ -4,6 +4,6 @@ int	isArrayQueueFull(ArrayQueue *pQueue)
 {
 	if (pQueue->currentElementCount == pQueue->maxElementCount
 		|| pQueue->rear == pQueue->maxElementCount - 1)
-		return (1);
-	return (0);
+		return (TRUE);
+	return (FALSE);
 }

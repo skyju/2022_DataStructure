@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "linkeddeque.h"
 
 /*
@@ -14,7 +12,7 @@ int	main(void)
 	insertFrontLD(deque, element);
 	element.data = 'B';
 	insertFrontLD(deque, element);
-	
+
 	printf("--- Front ---\n");
 	displayFrontLinkedDeque(deque);
 	printf("--- Rear ---\n");
@@ -24,7 +22,7 @@ int	main(void)
 	insertFrontLD(deque, element);
 	element.data = 'Z';
 	insertFrontLD(deque, element);
-	
+
 	printf("--- Front ---\n");
 	displayFrontLinkedDeque(deque);
 	printf("--- Rear ---\n");
@@ -46,7 +44,7 @@ int	main(void)
 }
 */
 
-enum	e_input
+enum e_input
 {
 	INPUT_NONE,
 	INPUT_ENQUEFRONT,
@@ -60,9 +58,9 @@ enum	e_input
 	INPUT_QUIT
 };
 
-int	displayinput(LinkedDeque *pQueue)
+int displayinput(LinkedDeque *pQueue)
 {
-	int	input;
+	int input;
 
 	system("clear");
 	printf("1. enqueFront\n");
@@ -83,12 +81,13 @@ int	displayinput(LinkedDeque *pQueue)
 	return (input);
 }
 
-int	main(void)
-{	
-	int					input;
-	LinkedDeque		*deque;
-	DequeNode		*peek;
-	DequeNode		element;
+int main(void)
+{
+	int input;
+	LinkedDeque *deque;
+	DequeNode *peek;
+	DequeNode element;
+	char tmp;
 
 	deque = createLinkedDeque();
 	while (1)
@@ -96,7 +95,7 @@ int	main(void)
 		input = displayinput(deque);
 
 		if (input == INPUT_QUIT)
-			break ;
+			break;
 		switch (input)
 		{
 		case INPUT_ENQUEFRONT:
@@ -104,37 +103,42 @@ int	main(void)
 			printf("enqueue 할 문자를 입력해주세요. : ");
 			scanf(" %c", &element.data);
 			insertFrontLD(deque, element);
-			break ;
+			break;
 		case INPUT_ENQUEREAR:
 			system("clear");
 			printf("enqueue 할 문자를 입력해주세요. : ");
 			scanf(" %c", &element.data);
 			insertRearLD(deque, element);
-			break ;
+			break;
 		case INPUT_DEQUEFRONT:
 			deleteFrontLD(deque);
-			break ;
+			break;
 		case INPUT_DEQUEREAR:
 			deleteRearLD(deque);
-			break ;
+			break;
 		case INPUT_DISPLAYFRONT:
 			displayFrontLinkedDeque(deque);
-			system("read -n 1 -s -p \"Press any key for return\"");
-			break ;
+			printf("press any character.\n");
+			scanf(" %c", &tmp);
+			break;
 		case INPUT_DISPLAYREAR:
 			displayRearLinkedDeque(deque);
-			system("read -n 1 -s -p \"Press any key for return\"");
-			break ;
+			printf("press any character.\n");
+			scanf(" %c", &tmp);
+			break;
 		case INPUT_PEEKFRONT:
-			peek = peekFrontLD(deque);
-			printf("\npeekFrontNode : %c\n", peek->data);
-			system("read -n 1 -s -p \"Press any key for return\"");
-			break ;
+			if (peekFrontLD(deque))
+				printf("\npeekFrontNode : %c\n", peekFrontLD(deque)->data);
+			printf("press any character.\n");
+			scanf(" %c", &tmp);
+			break;
 		case INPUT_PEEKREAR:
-			peek = peekRearLD(deque);
-			printf("\npeekRearNode : %c\n", peek->data);
-			system("read -n 1 -s -p \"Press any key for return\"");
-			break ;
+			if (peekRearLD(deque))
+				printf("\npeekRearNode : %c\n", peekRearLD(deque)->data);
+			printf("press any character.\n");
+			scanf(" %c", &tmp);
+			// system("read -n 1 -s -p \"Press any key for return\"");
+			break;
 		}
 	}
 	deleteLinkedDeque(deque);

@@ -1,8 +1,8 @@
 #include "circularqueue.h"
 
-int	isCircularQueueEmpty(CircularQueue *pQueue)
+int isCircularQueueEmpty(CircularQueue *pQueue)
 {
-	if (pQueue->currentElementCount == 0 || pQueue->rear == pQueue->front)
-		return (1);
-	return (0);
+	if (pQueue->currentElementCount == 0)
+		return (TRUE);
+	return (FALSE);
 }

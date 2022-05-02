@@ -1,24 +1,26 @@
-#include <stdlib.h>
 #include "linkeddeque.h"
 
-DequeNode	*deleteFrontLD(LinkedDeque *pDeque)
+DequeNode *deleteFrontLD(LinkedDeque *pDeque)
 {
-	DequeNode	*Node;
+	if (!pDeque)
+	{
+		printf("[error] Queue is null.\n");
+		return (NULL);
+	}
+	if (isLinkedDequeEmpty(pDeque))
+	{
+		printf("[error] Queue is empty.\n");
+		return (NULL);
+	}
 
-	if (!pDeque || isLinkedDequeEmpty(pDeque))
-		return (0);
-	Node = pDeque->pFrontNode;
+	DequeNode *node;
+	node = pDeque->pFrontNode;
 	pDeque->pFrontNode = pDeque->pFrontNode->pRLink;
-	Node->pRLink = 0;
+	node->pRLink = NULL;
 	if (pDeque->currentElementCount == 1)
-	{
-		pDeque->pRearNode = 0;
-	}
+		pDeque->pRearNode = NULL;
 	else
-	{
-		pDeque->pFrontNode->pLLink = 0;
-	}
-	free(Node);
+		pDeque->pFrontNode->pLLink = NULL;
 	pDeque->currentElementCount--;
-	return (Node);
+	return (node);
 }

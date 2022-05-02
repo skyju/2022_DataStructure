@@ -1,16 +1,20 @@
-#include <stdio.h>
 #include "linkeddeque.h"
 
-void	displayFrontLinkedDeque(LinkedDeque *pDeque)
+void displayFrontLinkedDeque(LinkedDeque *pDeque)
 {
-	DequeNode	*Node;
-	DequeNode	*temp;
+	DequeNode *node;
+	DequeNode *temp;
 
-	Node = pDeque->pFrontNode;
-	while (Node)
+	if (!pDeque)
 	{
-		temp = Node->pRLink;
-		printf("%c\n", Node->data);
-		Node = temp;
+		printf("[error] Queue is null.\n");
+		return;
+	}
+	node = pDeque->pFrontNode;
+	while (node)
+	{
+		temp = node->pRLink;
+		printf("%c\n", node->data);
+		node = temp;
 	}
 }

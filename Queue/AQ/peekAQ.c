@@ -1,11 +1,16 @@
 #include "arrayqueue.h"
 
-ArrayQueueNode	*peekAQ(ArrayQueue *pQueue)
+ArrayQueueNode *peekAQ(ArrayQueue *pQueue)
 {
-	ArrayQueueNode	*pNode;
-
-	if (!pQueue || isArrayQueueEmpty(pQueue))
-		return (0);
-	pNode = &pQueue->pElement[pQueue->front];
-	return (pNode);
+	if (pQueue == NULL)
+	{
+		printf("[error] Queue is null.\n");
+		return (NULL);
+	}
+	if (isArrayQueueEmpty(pQueue))
+	{
+		printf("[error] Queue is empty.\n");
+		return (NULL);
+	}
+	return (&(pQueue->pElement[pQueue->front + 1]));
 }

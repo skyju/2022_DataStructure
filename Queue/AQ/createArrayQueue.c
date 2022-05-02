@@ -1,25 +1,31 @@
-#include <stdlib.h>
 #include "arrayqueue.h"
 
-ArrayQueue	*createArrayQueue(int maxElementCount)
+ArrayQueue *createArrayQueue(int maxElementCount)
 {
-	ArrayQueue	*arrayqueue;
+	ArrayQueue *arrayqueue;
 
-	if (maxElementCount < 0)
-		return (0);
+	if (maxElementCount <= 0)
+	{
+		printf("[error] Invalid count number.\n");
+		return (NULL);
+	}
 	arrayqueue = (ArrayQueue *)malloc(sizeof(ArrayQueue));
 	if (!arrayqueue)
-		return (0);
+	{
+		printf("[error] Memory allocate failed.\n");
+		return (NULL);
+	}
 	arrayqueue->maxElementCount = maxElementCount;
 	arrayqueue->currentElementCount = 0;
 	arrayqueue->front = -1;
 	arrayqueue->rear = -1;
-	arrayqueue->pElement = (ArrayQueueNode *)malloc(sizeof(ArrayQueueNode) * maxElementCount);
+	arrayqueue->pElement = (ArrayQueueNode *)calloc(maxElementCount, sizeof(ArrayQueueNode));
 	if (!arrayqueue->pElement)
 	{
+		printf("[error] Memory allocate failed.\n");
 		free(arrayqueue);
-		arrayqueue = 0;
-		return (0);
+		arrayqueue = NULL;
+		return (NULL);
 	}
 	return (arrayqueue);
 }

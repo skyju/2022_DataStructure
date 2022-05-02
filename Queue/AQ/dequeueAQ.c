@@ -1,18 +1,29 @@
-#include <stdlib.h>
 #include "arrayqueue.h"
 
-ArrayQueueNode	*dequeueAQ(ArrayQueue *pQueue)
+ArrayQueueNode *dequeueAQ(ArrayQueue *pQueue)
 {
-	ArrayQueueNode	*Node;
+	if (!pQueue)
+	{
+		printf("[error] Queue is null.\n");
+		return (NULL);
+	}
+	if (isArrayQueueEmpty(pQueue))
+	{
+		printf("[error] Queue is empty.\n");
+		return (NULL);
+	}
+	
+	ArrayQueueNode *node;
+	node = (ArrayQueueNode *)malloc(sizeof(ArrayQueueNode));
+	if (!node)
+	{
+		printf("[error] Memory allocate failed.\n");
+		return (NULL);
+	}
 
-	if (!pQueue || isArrayQueueEmpty(pQueue))
-		return (0);
-	Node = (ArrayQueueNode *)malloc(sizeof(ArrayQueueNode));
-	if (!Node)
-		return (0);
 	pQueue->front++;
-	Node->data = pQueue->pElement[pQueue->front].data;
+	*node = pQueue->pElement[pQueue->front];
 	pQueue->pElement[pQueue->front].data = 0;
 	pQueue->currentElementCount--;
-	return (Node);
+	return (node);
 }

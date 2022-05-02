@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "arrayqueue.h"
 
 /*
@@ -11,13 +9,13 @@ int	main(void)
 	ArrayQueueNode	element;
 
 	queue = createArrayQueue(4);
-	
+
 	printf("empty : %d \n", isArrayQueueEmpty(queue));
 
 	element.data = 'A';
 	enqueueAQ(queue, element);
 	element.data = 'B';
-	enqueueAQ(queue, element);	
+	enqueueAQ(queue, element);
 	element.data = 'C';
 	enqueueAQ(queue, element);
 	element.data = 'D';
@@ -51,25 +49,29 @@ int	main(void)
 	return (0);
 }*/
 
-enum	e_input
+enum e_input
 {
 	INPUT_NONE,
 	INPUT_ENQUE,
 	INPUT_DEQUE,
+	INPUT_PEEK,
+	INPUT_REPOSITION,
 	INPUT_DISPLAY,
 	INPUT_QUIT
 };
 
-int	displayinput(ArrayQueue *pQueue)
+int displayinput(ArrayQueue *pQueue)
 {
-	int	input;
-	int	i;
+	int input;
+	int i;
 
 	system("clear");
-	printf("1. enque\n");	
-	printf("2. deque\n");	
-	printf("3. display\n");	
-	printf("4. quit\n");
+	printf("1. enque\n");
+	printf("2. deque\n");
+	printf("3. peek\n");
+	printf("4. reposition\n");
+	printf("5. display\n");
+	printf("6. quit\n");
 	printf("currentCount : %d, maxCount : %d\n", pQueue->currentElementCount, pQueue->maxElementCount);
 	i = 0;
 	while (i++ <= pQueue->front)
@@ -88,11 +90,12 @@ int	displayinput(ArrayQueue *pQueue)
 	return (input);
 }
 
-int	main(void)
-{	
-	int					input;
-	ArrayQueue		*queue;
-	ArrayQueueNode	element;
+int main(void)
+{
+	int input;
+	ArrayQueue *queue;
+	ArrayQueueNode element;
+	char tmp;
 
 	system("clear");
 	printf("생성 할 배열의 크기를 입력해주세요. :");
@@ -104,7 +107,7 @@ int	main(void)
 		input = displayinput(queue);
 
 		if (input == INPUT_QUIT)
-			break ;
+			break;
 		switch (input)
 		{
 		case INPUT_ENQUE:
@@ -112,14 +115,25 @@ int	main(void)
 			printf("enqueue 할 문자를 입력해주세요. : ");
 			scanf(" %c", &element.data);
 			enqueueAQ(queue, element);
-			break ;
+			break;
 		case INPUT_DEQUE:
 			dequeueAQ(queue);
-			break ;
+			break;
+		case INPUT_PEEK:
+			if (peekAQ(queue))
+				printf("%c\n", peekAQ(queue)->data);
+			printf("press any character.\n");
+			scanf(" %c", &tmp);
+			break;
+		case INPUT_REPOSITION:
+			repositionAQ(queue);
+			break;
 		case INPUT_DISPLAY:
 			displayArrayQueue(queue);
-			system("read -n 1 -s -p \"Press any key for return\"");
-			break ;
+			printf("press any character.\n");
+			scanf(" %c", &tmp);
+			// system("read -n 1 -s -p \"Press any key for return\"");
+			break;
 		}
 	}
 	deleteArrayQueue(queue);

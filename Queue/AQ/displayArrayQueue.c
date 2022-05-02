@@ -1,16 +1,21 @@
-#include <stdio.h>
 #include "arrayqueue.h"
 
-void	displayArrayQueue(ArrayQueue *pQueue)
+void displayArrayQueue(ArrayQueue *pQueue)
 {
-	int	idx;
-
-	if (!pQueue || isArrayQueueEmpty(pQueue))
-		return ;
-	idx = pQueue->front + 1;
-	while (idx <= pQueue->rear)
+	if (pQueue == NULL)
 	{
-		printf("%c\n", pQueue->pElement[idx].data);
-		idx++;
+		printf("[error] Queue is null.\n");
+		return;
 	}
+	if (isArrayQueueEmpty(pQueue))
+	{
+		printf("Queue is empty.. \n");
+		return;
+	}
+	int start = pQueue->front + 1;
+	int end = pQueue->rear;
+	for (int i = 0; i < start; i++)
+		printf("[%d] : empty!..\n", i);
+	for (int i = start; i <= end; i++)
+		printf("[%d] : %c\n", i, pQueue->pElement[i].data);
 }

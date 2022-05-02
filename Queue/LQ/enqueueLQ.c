@@ -1,25 +1,32 @@
-#include <stdlib.h>
 #include "linkedqueue.h"
 
-int	enqueueLQ(LinkedQueue *pQueue, LinkedQueueNode element)
+int enqueueLQ(LinkedQueue *pQueue, LinkedQueueNode element)
 {
-	LinkedQueueNode	*Node;
-
-	if (!pQueue)
-		return (0);
-	Node = (LinkedQueueNode *)malloc(sizeof(LinkedQueueNode));
-	if (!Node)
-		return (0);
-	Node->data = element.data;
-	if (isLinkedQueueEmpty(pQueue))
+	if (pQueue == NULL)
 	{
-		pQueue->front = Node;
-		pQueue->rear = Node;
+		printf("[error] Queue is null.\n");
+		return (FALSE);
+	}
+
+	LinkedQueueNode *node;
+	node = (LinkedQueueNode *)malloc(sizeof(LinkedQueueNode));
+	if (!node)
+	{
+		printf("[error] Memory allocate failed.\n");
+		return (FALSE);
+	}
+
+	*node = element;
+	node->pLink = NULL;
+	if (isLinkedQueueEmpty(pQueue) == 1)
+	{
+		pQueue->front = node;
+		pQueue->rear = node;
 	}
 	else
 	{
-		pQueue->rear->pLink = Node;
-		pQueue->rear = Node;
+		pQueue->rear->pLink = node;
+		pQueue->rear = node;
 	}
 	pQueue->currentElementCount++;
 	return (TRUE);

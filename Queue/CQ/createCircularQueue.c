@@ -1,25 +1,31 @@
-#include <stdlib.h>
 #include "circularqueue.h"
 
-CircularQueue	*createCircularQueue(int maxElementCount)
+CircularQueue *createCircularQueue(int maxElementCount)
 {
-	CircularQueue	*circularqueue;
+	CircularQueue *circularqueue;
 
-	if (maxElementCount < 0)
-		return (0);
+	if (maxElementCount <= 0)
+	{
+		printf("[error] Invalid count number.\n");
+		return (NULL);
+	}
 	circularqueue = (CircularQueue *)malloc(sizeof(CircularQueue));
 	if (!circularqueue)
-		return (0);
+	{
+		printf("[error] Memory allocate failed.\n");
+		return (NULL);
+	}
 	circularqueue->maxElementCount = maxElementCount;
 	circularqueue->currentElementCount = 0;
-	circularqueue->front = 0;
-	circularqueue->rear = 0;
-	circularqueue->pElement = (CircularQueueNode *)malloc(sizeof(CircularQueueNode) * maxElementCount);
+	circularqueue->front = -1;
+	circularqueue->rear = -1;
+	circularqueue->pElement = (CircularQueueNode *)calloc(maxElementCount, sizeof(CircularQueueNode));
 	if (!circularqueue->pElement)
 	{
+		printf("[error] Memory allocate failed.\n");
 		free(circularqueue);
-		circularqueue = 0;
-		return (0);
+		circularqueue = NULL;
+		return (NULL);
 	}
 	return (circularqueue);
 }

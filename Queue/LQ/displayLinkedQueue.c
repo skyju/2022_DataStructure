@@ -1,12 +1,19 @@
-#include <stdio.h>
 #include "linkedqueue.h"
 
-void	displayLinkedQueue(LinkedQueue *pQueue)
+void displayLinkedQueue(LinkedQueue *pQueue)
 {
-	LinkedQueueNode	*cur;
+	if (pQueue == NULL)
+	{
+		printf("[error] Queue is null.\n");
+		return;
+	}
+	if (isLinkedQueueEmpty(pQueue))
+	{
+		printf("Queue is empty.. \n");
+		return;
+	}
+	LinkedQueueNode *cur;
 
-	if (!pQueue)
-		return ;
 	cur = pQueue->front;
 	while (cur)
 	{

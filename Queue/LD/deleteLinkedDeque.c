@@ -1,19 +1,22 @@
-#include <stdlib.h>
 #include "linkeddeque.h"
 
-void	deleteLinkedDeque(LinkedDeque *pDeque)
+void deleteLinkedDeque(LinkedDeque *pDeque)
 {
-	DequeNode	*Node;
-	DequeNode	*temp;
+	DequeNode *node;
+	DequeNode *temp;
 
 	if (!pDeque)
-		return ;
-	Node = pDeque->pFrontNode;
-	while (Node)
 	{
-		temp = Node->pRLink;
-		free(Node);
-		Node = temp;
+		printf("[error] Queue is null.\n");
+		return;
+	}
+	node = pDeque->pFrontNode;
+	while (node)
+	{
+		temp = node->pRLink;
+		free(node);
+		node = temp;
 	}
 	free(pDeque);
+	pDeque = NULL;
 }

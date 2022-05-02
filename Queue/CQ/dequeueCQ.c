@@ -1,18 +1,29 @@
-#include <stdlib.h>
 #include "circularqueue.h"
 
-CircularQueueNode	*dequeueCQ(CircularQueue *pQueue)
+CircularQueueNode *dequeueCQ(CircularQueue *pQueue)
 {
-	CircularQueueNode	*Node;
+	if (!pQueue)
+	{
+		printf("[error] Queue is null.\n");
+		return (NULL);
+	}
+	if (isCircularQueueEmpty(pQueue))
+	{
+		printf("[error] Queue is empty.\n");
+		return (NULL);
+	}
 
-	if (!pQueue || isCircularQueueEmpty(pQueue))
-		return (FALSE);
-	Node = (CircularQueueNode *)malloc(sizeof(CircularQueueNode));
-	if (!Node)
-		return (FALSE);
+	CircularQueueNode *node;
+	node = (CircularQueueNode *)malloc(sizeof(CircularQueueNode));
+	if (!node)
+	{
+		printf("[error] Memory allocate failed.\n");
+		return (NULL);
+	}
+
 	pQueue->front = (pQueue->front + 1) % pQueue->maxElementCount;
-	Node->data = pQueue->pElement[pQueue->front].data;
-	pQueue->pElement[pQueue->front].data = 0;;
+	*node = pQueue->pElement[pQueue->front];
+	pQueue->pElement[pQueue->front].data = 0;
 	pQueue->currentElementCount--;
-	return (Node);
+	return (node);
 }

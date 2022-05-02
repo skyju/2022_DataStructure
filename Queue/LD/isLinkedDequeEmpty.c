@@ -6,5 +6,5 @@ int	isLinkedDequeEmpty(LinkedDeque *pDeque)
 		return (ERROR);
 	if (pDeque->currentElementCount == 0)
 		return (TRUE);
-	return (0);
+	return (FALSE);
 }

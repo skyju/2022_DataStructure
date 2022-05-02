@@ -1,11 +1,14 @@
-#include <stdlib.h>
 #include "circularqueue.h"
 
-void	deleteCircularQueue(CircularQueue *pQueue)
+void deleteCircularQueue(CircularQueue *pQueue)
 {
 	if (!pQueue)
-		return ;
-	free(pQueue->pElement);
+	{
+		printf("[error] Queue is null.\n");
+		return;
+	}
+	if (pQueue->pElement)
+		free(pQueue->pElement);
 	free(pQueue);
-	pQueue = 0;
+	pQueue = NULL;
 }

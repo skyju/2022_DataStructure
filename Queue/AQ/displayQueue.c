@@ -1,13 +1,12 @@
-#include <stdio.h>
 #include "arrayqueue.h"
 
-void	displayQueue(ArrayQueue *pQueue)
+void displayQueue(ArrayQueue *pQueue)
 {
-	int	i;
-	int	idx;
+	int i;
+	int idx;
 
 	if (!pQueue || isArrayQueueEmpty(pQueue))
-		return ;
+		return;
 	idx = pQueue->front + 1;
 	i = 0;
 	while (i++ <= pQueue->front)

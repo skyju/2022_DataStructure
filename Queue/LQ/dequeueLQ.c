@@ -1,22 +1,23 @@
-#include <stdlib.h>
 #include "linkedqueue.h"
 
-LinkedQueueNode	*dequeueLQ(LinkedQueue *pQueue)
+LinkedQueueNode *dequeueLQ(LinkedQueue *pQueue)
 {
-	LinkedQueueNode	*Node;
-
-	if (!pQueue || isLinkedQueueEmpty(pQueue))
-		return (0);
-	if (pQueue->currentElementCount == 1)
+	if (pQueue == NULL)
 	{
-		pQueue->rear = 0;
+		printf("[error] Queue is null.\n");
+		return (NULL);
 	}
-	else
+	if (isLinkedQueueEmpty(pQueue))
 	{
-		Node = pQueue->front;
-		pQueue->front = pQueue->front->pLink;
-		Node->pLink = 0;
+		printf("[error] Queue is empty.\n");
+		return (NULL);
 	}
+	LinkedQueueNode *node;
+	node = pQueue->front;
+	pQueue->front = pQueue->front->pLink;
+	node->pLink = NULL;
+	if (pQueue->currentElementCount == 1) //노드가 한개일 때는 리어 처리도 해야 함
+		pQueue->rear = NULL;
 	pQueue->currentElementCount--;
-	return (Node);
+	return (node);
 }

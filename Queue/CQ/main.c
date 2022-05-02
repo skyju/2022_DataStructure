@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "circularqueue.h"
 /*
 int	main(void)
@@ -34,26 +32,26 @@ int	main(void)
 }
 */
 
-enum	e_input
+enum e_input
 {
 	INPUT_NONE,
 	INPUT_ENQUE,
 	INPUT_DEQUE,
-	INPUT_DISPLAY,
+	INPUT_PEEK,
 	INPUT_QUIT
 };
 
-int	displayinput(CircularQueue *pQueue)
+int displayinput(CircularQueue *pQueue)
 {
-	int	input;
+	int input;
 
 	system("clear");
-	printf("1. enque\n");	
-	printf("2. deque\n");	
-	printf("3. display\n");	
+	printf("1. enque\n");
+	printf("2. deque\n");
+	printf("3. peek\n");
 	printf("4. quit\n");
 	printf("currentCount : %d, maxCount : %d\n", pQueue->currentElementCount, pQueue->maxElementCount);
-	displayQueue(pQueue);
+	displayCircularQueue(pQueue);
 	printf("\n숫자를 입력해주세요.\n");
 
 	scanf("%d", &input);
@@ -61,19 +59,23 @@ int	displayinput(CircularQueue *pQueue)
 	return (input);
 }
 
-int	main(void)
-{	
-	int					input;
-	CircularQueue		*queue;
-	CircularQueueNode	element;
+int main(void)
+{
+	int input;
+	CircularQueue *queue;
+	CircularQueueNode element;
+	char tmp;
 
-	queue = createCircularQueue(5);
+	system("clear");
+	printf("생성 할 배열의 크기를 입력해주세요. :");
+	scanf("%d", &input);
+	queue = createCircularQueue(input);
 	while (1)
 	{
 		input = displayinput(queue);
 
 		if (input == INPUT_QUIT)
-			break ;
+			break;
 		switch (input)
 		{
 		case INPUT_ENQUE:
@@ -81,14 +83,16 @@ int	main(void)
 			printf("enqueue 할 문자를 입력해주세요. : ");
 			scanf(" %c", &element.data);
 			enqueueCQ(queue, element);
-			break ;
+			break;
 		case INPUT_DEQUE:
 			dequeueCQ(queue);
-			break ;
-		case INPUT_DISPLAY:
-			displayCircularQueue(queue);
-			system("read -n 1 -s -p \"Press any key for return\"");
-			break ;
+			break;
+		case INPUT_PEEK:
+			if (peekCQ(queue))
+				printf("%c\n", peekCQ(queue)->data);
+			printf("press any character.\n");
+			scanf(" %c", &tmp);
+			break;
 		}
 	}
 	deleteCircularQueue(queue);

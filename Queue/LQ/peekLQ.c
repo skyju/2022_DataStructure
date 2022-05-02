@@ -1,11 +1,16 @@
 #include "linkedqueue.h"
 
-LinkedQueueNode	*peekLQ(LinkedQueue *pQueue)
+LinkedQueueNode *peekLQ(LinkedQueue *pQueue)
 {
-	LinkedQueueNode	*Node;
-
-	if(!pQueue || isLinkedQueueEmpty(pQueue))
-		return (0);
-	Node = pQueue->front;
-	return (Node);
+	if (pQueue == NULL)
+	{
+		printf("[error] Queue is null.\n");
+		return (NULL);
+	}
+	if (isLinkedQueueEmpty(pQueue))
+	{
+		printf("[error] Queue is empty.\n");
+		return (NULL);
+	}
+	return (pQueue->front);
 }

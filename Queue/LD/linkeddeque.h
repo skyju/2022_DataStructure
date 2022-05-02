@@ -1,41 +1,44 @@
 #ifndef _LINKED_DEQUE_
 #define _LINKED_DEQUE_
 
+#include <stdlib.h>
+#include <stdio.h>
+
 typedef struct DequeNodeType
 {
 	char data;
-	struct DequeNodeType* pRLink;
-	struct DequeNodeType* pLLink;
+	struct DequeNodeType *pRLink;
+	struct DequeNodeType *pLLink;
 } DequeNode;
 
 typedef struct LinkedDequeType
 {
-	int currentElementCount;	// 현재 원소의 개수
-	DequeNode* pFrontNode;		// Front 노드의 포인터
-	DequeNode* pRearNode;		// Rear 노드의 포인터
+	int currentElementCount;
+	DequeNode *pFrontNode;
+	DequeNode *pRearNode;
 } LinkedDeque;
 
-LinkedDeque* createLinkedDeque();
-int insertFrontLD(LinkedDeque* pDeque, DequeNode element);
-int insertRearLD(LinkedDeque* pDeque, DequeNode element);
-DequeNode* deleteFrontLD(LinkedDeque* pDeque);
-DequeNode* deleteRearLD(LinkedDeque* pDeque);
-DequeNode* peekFrontLD(LinkedDeque* pDeque);
-DequeNode* peekRearLD(LinkedDeque* pDeque);
-void deleteLinkedDeque(LinkedDeque* pDeque);
-int isLinkedDequeFull(LinkedDeque* pDeque);
-int isLinkedDequeEmpty(LinkedDeque* pDeque);
-void	displayLinkedDeque(LinkedDeque *pDeque);
-void	displayFrontLinkedDeque(LinkedDeque *pDeque);
-void	displayRearLinkedDeque(LinkedDeque *pDeque);
+LinkedDeque *createLinkedDeque();
+int insertFrontLD(LinkedDeque *pDeque, DequeNode element);
+int insertRearLD(LinkedDeque *pDeque, DequeNode element);
+DequeNode *deleteFrontLD(LinkedDeque *pDeque);
+DequeNode *deleteRearLD(LinkedDeque *pDeque);
+DequeNode *peekFrontLD(LinkedDeque *pDeque);
+DequeNode *peekRearLD(LinkedDeque *pDeque);
+void deleteLinkedDeque(LinkedDeque *pDeque);
+int isLinkedDequeFull(LinkedDeque *pDeque);
+int isLinkedDequeEmpty(LinkedDeque *pDeque);
+void displayLinkedDeque(LinkedDeque *pDeque);
+void displayFrontLinkedDeque(LinkedDeque *pDeque);
+void displayRearLinkedDeque(LinkedDeque *pDeque);
 
 #endif
 
 #ifndef _COMMON_QUEUE_DEF_
 #define _COMMON_QUEUE_DEF_
 
-#define TRUE		1
-#define FALSE		0
-#define ERROR		-1
+#define TRUE 1
+#define FALSE 0
+#define ERROR -1
 
 #endif

@@ -1,26 +1,34 @@
-#include <stdlib.h>
 #include "linkeddeque.h"
 
-int	insertRearLD(LinkedDeque *pDeque, DequeNode element)
+int insertRearLD(LinkedDeque *pDeque, DequeNode element)
 {
-	DequeNode	*Node;
+	DequeNode *node;
 
 	if (!pDeque)
+	{
+		printf("[error] Queue is null.\n");
 		return (ERROR);
-	Node = (DequeNode *)malloc(sizeof(DequeNode));
-	if (!Node)
+	}
+	node = (DequeNode *)malloc(sizeof(DequeNode));
+	if (!node)
+	{
+		printf("[error] Memory allocate failed.\n");
 		return (ERROR);
-	Node->data = element.data;
+	}
+	*node = element;
 	if (isLinkedDequeEmpty(pDeque))
 	{
-		pDeque->pFrontNode = Node;
-		pDeque->pRearNode = Node;
+		pDeque->pFrontNode = node;
+		pDeque->pRearNode = node;
+		node->pLLink = NULL;
+		node->pRLink = NULL;
 	}
 	else
 	{
-		pDeque->pRearNode->pRLink = Node;
-		Node->pLLink = pDeque->pRearNode;
-		pDeque->pRearNode = Node;
+		pDeque->pRearNode->pRLink = node;
+		node->pLLink = pDeque->pRearNode;
+		node->pRLink = NULL;
+		pDeque->pRearNode = node;
 	}
 	pDeque->currentElementCount++;
 	return (TRUE);

@@ -2,7 +2,8 @@
 
 int	isCircularQueueFull(CircularQueue *pQueue)
 {
-	if ((pQueue->rear + 1) % pQueue->maxElementCount == pQueue->front)
-		return (1);
-	return (0);
+	//if ((pQueue->rear + 1) % pQueue->maxElementCount == pQueue->front)
+	if (pQueue->currentElementCount == pQueue->maxElementCount)
+		return (TRUE);
+	return (FALSE);
 }
