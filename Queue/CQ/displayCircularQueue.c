@@ -12,11 +12,10 @@ void displayCircularQueue(CircularQueue *pQueue)
 		printf("Queue is empty.. \n");
 		return;
 	}
-	int idx;
-	idx = pQueue->front;
-	while (idx != pQueue->rear)
+	int i;
+	for (int idx = pQueue->front + 1; idx <= pQueue->front + pQueue->currentElementCount; idx++)
 	{
-		idx = (idx + 1) % pQueue->maxElementCount;
-		printf("%c", pQueue->pElement[idx].data);
+		i = idx % pQueue->maxElementCount;
+		printf("%c", pQueue->pElement[i].data);
 	}
 }

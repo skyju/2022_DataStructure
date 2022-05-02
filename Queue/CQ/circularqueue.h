@@ -11,11 +11,11 @@ typedef struct CircularQueueNodeType
 
 typedef struct CircularQueueType
 {
-	int maxElementCount;		// �ִ� ���� ����
-	int currentElementCount;	// ���� ������ ����
-	int front;					// front ��ġ
-	int rear;					// rear ��ġ
-	CircularQueueNode *pElement;	// ��� ������ ���� 1���� �迭 ������
+	int maxElementCount;	
+	int currentElementCount;	
+	int front;					
+	int rear;					
+	CircularQueueNode *pElement;	
 } CircularQueue;
 
 CircularQueue* createCircularQueue(int maxElementCount);
