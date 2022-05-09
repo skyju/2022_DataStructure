@@ -45,7 +45,7 @@ void displayLinkedQueue(LinkedQueue *pQueue);
 void insertCustomer(int arrivalTime, int serviceTime, int customerNumber, LinkedQueue *pQueue);
 void processArrival(int currentTime, LinkedQueue *pArrivalQueue, LinkedQueue *pWaitQueue);
 LinkedQueueNode *processServiceNodeStart(int currentTime, LinkedQueue *pWaitQueue);
-LinkedQueueNode *processServiceNodeEnd(int currentTime, LinkedQueueNode *pServiceNode, int *pServiceUserCount);
+LinkedQueueNode *processServiceNodeEnd(int currentTime, LinkedQueueNode *pServiceNode, int *pServiceUserCount, int *pTotalWaitTime);
 void printSimCustomer(int currentTime, SimCustomer customer);
 void printWaitQueueStatus(int currentTime, LinkedQueue *pWaitQueue);
 void printReport(int serviceUserCount, int totalWaitTime, int totalServiceTime);

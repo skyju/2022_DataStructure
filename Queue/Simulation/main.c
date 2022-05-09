@@ -74,7 +74,7 @@ int main(void)
 		// 서비스중인 상태인데, 서비스 종료시간이 현재시각과 같으면, 서비스를 종료.
 		if (pServiceNode && (pServiceNode->data.endTime - currentTime == 0))
 		{
-			pServiceNode = processServiceNodeEnd(currentTime, pServiceNode, &serviceUserCount);
+			pServiceNode = processServiceNodeEnd(currentTime, pServiceNode, &serviceUserCount, &totalWaitTime);
 			printf("[ %dnd customer service end. ]\n", pServiceNode->data.customerNumber);
 			free(pServiceNode);
 			pServiceNode = NULL;

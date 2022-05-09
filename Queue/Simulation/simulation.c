@@ -41,12 +41,13 @@ void processArrival(int currentTime, LinkedQueue *pArrivalQueue, LinkedQueue *pW
 }
 
 // 3. 서비스 종료 : 현재 시간에 기존 서비스 중이던 고객이 서비스 완료되었다면 종료 처리
-LinkedQueueNode *processServiceNodeEnd(int currentTime, LinkedQueueNode *pServiceNode, int *pServiceUserCount)
+LinkedQueueNode *processServiceNodeEnd(int currentTime, LinkedQueueNode *pServiceNode, int *pServiceUserCount, int *pTotalWaitTime)
 {
 	if (pServiceNode->data.endTime == currentTime)
 	{
 		pServiceNode->data.status = end;
 		*(pServiceUserCount) += 1;
+		*(pTotalWaitTime) += pServiceNode->data.startTime - pServiceNode->data.arrivalTime;
 	}
 	else
 	{
