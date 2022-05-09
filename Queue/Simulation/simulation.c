@@ -41,14 +41,12 @@ void processArrival(int currentTime, LinkedQueue *pArrivalQueue, LinkedQueue *pW
 }
 
 // 3. 서비스 종료 : 현재 시간에 기존 서비스 중이던 고객이 서비스 완료되었다면 종료 처리
-LinkedQueueNode *processServiceNodeEnd(int currentTime, LinkedQueueNode *pServiceNode, int *pServiceUserCount, int *pTotalWaitTime)
+LinkedQueueNode *processServiceNodeEnd(int currentTime, LinkedQueueNode *pServiceNode, int *pServiceUserCount)
 {
 	if (pServiceNode->data.endTime == currentTime)
 	{
 		pServiceNode->data.status = end;
 		*(pServiceUserCount) += 1;
-		// 헷갈림
-		*(pTotalWaitTime) += pServiceNode->data.arrivalTime - pServiceNode->data.serviceTime;
 	}
 	else
 	{
@@ -116,19 +114,14 @@ void printWaitQueueStatus(int currentTime, LinkedQueue *pWaitQueue)
 }
 
 // 6. 최종 시뮬레이션 결과 출력
-void printReport(LinkedQueue *pWaitQueue, int serviceUserCount, int totalWaitTime, int currentTime)
+void printReport(int serviceUserCount, int totalWaitTime, int totalServiceTime)
 {
-	if (!pWaitQueue)
-	{
-		printf("[error] Queue is Null.\n");
-		return;
-	}
 	if (serviceUserCount == 0)
 	{
 		printf("There are 0 customers who used the service.\n");
 		return;
 	}
-	printWaitQueueStatus(currentTime, pWaitQueue);
 	printf("%d people used the service.\n", serviceUserCount);
 	printf("Total waiting time is %d.\n", totalWaitTime);
+	printf("Total Service time is %d.\n", totalServiceTime);
 }
