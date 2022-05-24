@@ -1,8 +1,8 @@
 #include "binTree.h"
 
-BinTree* makeBinTree(BinTreeNode rootNode)
+BinTree *makeBinTree(BinTreeNode rootNode)
 {
-	BinTree* tree;
+	BinTree *tree;
 	tree = (BinTree *)malloc(sizeof(BinTree));
 	if (!tree)
 	{
@@ -11,7 +11,8 @@ BinTree* makeBinTree(BinTreeNode rootNode)
 	}
 	BinTreeNode *node;
 	node = (BinTreeNode *)malloc(sizeof(BinTreeNode));
-	if (!node) {
+	if (!node)
+	{
 		printf("[error] Memory allocate failed.\n");
 		free(tree);
 		return (NULL);
@@ -23,24 +24,27 @@ BinTree* makeBinTree(BinTreeNode rootNode)
 	return (tree);
 }
 
-BinTreeNode* getRootNodeBT(BinTree* pBinTree)
+BinTreeNode *getRootNodeBT(BinTree *pBinTree)
 {
-	if (!pBinTree) {
+	if (!pBinTree)
+	{
 		printf("[error] Binary Tree is Null.\n");
 		return (NULL);
 	}
 	return (pBinTree->pRootNode);
 }
 
-BinTreeNode* insertLeftChildNodeBT(BinTreeNode* pParentNode, BinTreeNode element)
+BinTreeNode *insertLeftChildNodeBT(BinTreeNode *pParentNode, BinTreeNode element)
 {
-	if (!pParentNode) {
+	if (!pParentNode)
+	{
 		printf("[error] Parent Node is Null.\n");
 		return (NULL);
 	}
 	BinTreeNode *node;
 	node = (BinTreeNode *)malloc(sizeof(BinTreeNode));
-	if (!node) {
+	if (!node)
+	{
 		printf("[error] Memory allocate failed.\n");
 		return (NULL);
 	}
@@ -51,15 +55,17 @@ BinTreeNode* insertLeftChildNodeBT(BinTreeNode* pParentNode, BinTreeNode element
 	return (node);
 }
 
-BinTreeNode* insertRightChildNodeBT(BinTreeNode* pParentNode, BinTreeNode element)
+BinTreeNode *insertRightChildNodeBT(BinTreeNode *pParentNode, BinTreeNode element)
 {
-	if (!pParentNode) {
+	if (!pParentNode)
+	{
 		printf("[error] Parent Node is Null.\n");
 		return (NULL);
 	}
 	BinTreeNode *node;
 	node = (BinTreeNode *)malloc(sizeof(BinTreeNode));
-	if (!node) {
+	if (!node)
+	{
 		printf("[error] Memory allocate failed.\n");
 		return (NULL);
 	}
@@ -70,34 +76,54 @@ BinTreeNode* insertRightChildNodeBT(BinTreeNode* pParentNode, BinTreeNode elemen
 	return (node);
 }
 
-BinTreeNode* getLeftChildNodeBT(BinTreeNode* pNode)
+BinTreeNode *getLeftChildNodeBT(BinTreeNode *pNode)
 {
-	if (!pNode) {
+	if (!pNode)
+	{
 		printf("[error] Node is Null.\n");
 		return (NULL);
 	}
 	return (pNode->pLeftChild);
 }
 
-BinTreeNode* getRightChildNodeBT(BinTreeNode* pNode)
+BinTreeNode *getRightChildNodeBT(BinTreeNode *pNode)
 {
-	if (!pNode) {
+	if (!pNode)
+	{
 		printf("[error] Node is Null.\n");
 		return (NULL);
 	}
 	return (pNode->pRightChild);
 }
 
-void deleteBinTree(BinTree* pBinTree)
+BinTreeNode *getParentNodeBT(BinTreeNode *pRootNode, BinTreeNode element)
 {
-	if (!pBinTree) {
+	BinTreeNode *node = pRootNode;
+
+	while (node)
+	{
+		if ((node->pLeftChild && node->pLeftChild->data == element.data) 
+			|| (node->pRightChild && node->pRightChild->data == element.data))
+			return (node);
+		else if (node->data < element.data)
+			node = node->pRightChild;
+		else
+			node = node->pLeftChild;
+	}
+	return (node);
+}
+
+void deleteBinTree(BinTree *pBinTree)
+{
+	if (!pBinTree)
+	{
 		printf("[error] Binary Tree is Null.\n");
 		return;
 	}
 	deleteBinTreeNode(pBinTree->pRootNode);
 }
 
-void deleteBinTreeNode(BinTreeNode* pNode)
+void deleteBinTreeNode(BinTreeNode *pNode)
 {
 	if (!pNode)
 		return;
