@@ -3,77 +3,84 @@
 #include <string.h>
 #include "linkedlist.h"
 
-LinkedList *createLinkedList() {
-    LinkedList *pReturn = (LinkedList *)malloc(sizeof(LinkedList));
-    memset(pReturn, 0, sizeof(LinkedList));
-    return pReturn;
+LinkedList *createLinkedList()
+{
+    return ((LinkedList *)calloc(sizeof(LinkedList), 1));
 }
 
-int getLinkedListData(LinkedList* pList, int position) {
-    int i = 0;
-    
-    LinkedListNode *pCurrentNode = &(pList->headerNode);
-    for (i = 0; i <= position; i++) {
-        pCurrentNode = pCurrentNode->pLink;
-    }
-    
-    return pCurrentNode->data;
+Vertex *createVertex(Vertex element)
+{
+    Vertex *newVertex = calloc(sizeof(Vertex), 1);
+    *newVertex = element;
+    return (newVertex);
 }
 
-int addLinkedListData(LinkedList* pList, int position, int data) {
+int addVertex(LinkedList *pList, int position, Vertex element)
+{
     int i = 0;
-    LinkedListNode *pNewNode = NULL;
-    LinkedListNode *pPreNode = NULL;
-    
-    pNewNode = (LinkedListNode*)malloc(sizeof(LinkedListNode));
-    pNewNode->data = data;
-    
-    pPreNode = &(pList->headerNode);
-    for (i = 0; i < position; i++) {
-        pPreNode = pPreNode->pLink;
-    }
-    
-    pNewNode->pLink = pPreNode->pLink;
-    pPreNode->pLink = pNewNode;
+    Vertex *pNewVertex = NULL;
+    Vertex *pPreVertex = NULL;
+
+    if (!pList || position < 0 || position > pList->currentCount)
+        return (FALSE);
+
+    pNewVertex = createVertex(element);
+    pPreVertex = &(pList->headerVertex);
+
+    for (i = 0; i < position; i++)
+        pPreVertex = pPreVertex->pLink;
+    pNewVertex->pLink = pPreVertex->pLink;
+    pPreVertex->pLink = pNewVertex;
     pList->currentCount++;
-    return 1;
+    return (TRUE);
 }
 
-int removeLinkedListData(LinkedList* pList, int position) {
+int removeVertex(LinkedList *pList, int position)
+{
     int i = 0;
-    LinkedListNode *pDelNode = NULL;
-    LinkedListNode *pPreNode = NULL;
-    
-    pPreNode = &(pList->headerNode);
-    for (i = 0; i < position; i++) {
-        pPreNode = pPreNode->pLink;
-    }
-    
-    pDelNode = pPreNode->pLink;
-    pPreNode->pLink = pDelNode->pLink;
-    free(pDelNode);
+    Vertex *pDelVertex = NULL;
+    Vertex *pPreVertex = NULL;
+
+    pPreVertex = &(pList->headerVertex);
+    for (i = 0; i < position; i++)
+        pPreVertex = pPreVertex->pLink;
+    pDelVertex = pPreVertex->pLink;
+    pPreVertex->pLink = pDelVertex->pLink;
+    free(pDelVertex);
     pList->currentCount--;
-    return 1;
+    return (TRUE);
 }
 
-void deleteLinkedList(LinkedList* pList) {
-    LinkedListNode *pDelNode = NULL;
-    LinkedListNode *pPreNode = pList->headerNode.pLink;
-    while(pPreNode != NULL) {
-        pDelNode = pPreNode;
-        pPreNode = pPreNode->pLink;
-        
-        free(pDelNode);
+int getVertexI(LinkedList *pList, int position)
+{
+    int i = 0;
+
+    Vertex *pCurVertex = &(pList->headerVertex);
+    for (i = 0; i <= position; i++)
+        pCurVertex = pCurVertex->pLink;
+
+    return pCurVertex->data.vertexI;
+}
+
+void deleteLinkedListGraph(LinkedList *pList)
+{
+    Vertex *pDelVertex = NULL;
+    Vertex *pPreVertex = pList->headerVertex.pLink;
+    while (pPreVertex != NULL)
+    {
+        pDelVertex = pPreVertex;
+        pPreVertex = pPreVertex->pLink;
+
+        free(pDelVertex);
     }
-    
     free(pList);
 }
 
-int getLinkedListLength(LinkedList* pList) {
-    if (NULL != pList) {
+int getGraphVertexCount(LinkedList *pList)
+{
+    if (NULL != pList)
+    {
         return pList->currentCount;
     }
     return 0;
 }
-
-

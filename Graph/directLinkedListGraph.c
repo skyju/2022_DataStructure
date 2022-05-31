@@ -5,16 +5,17 @@
 
 typedef struct DirectLinkedGraphType
 {
-    int nodeCount;          // 노드 개수
+    int maxVertexCount; // 최대 노드 개수
+    int currentVertexCount; // 현재 노드 개수
     LinkedList **ppAdjEdge; // 간선 저장을 위한 연결 리스트 포인터의 배열
 } DirectLinkedGraph;
 
-DirectLinkedGraph *createDirectLinkedGraph(int nodeCount)
+// 그래프 생성
+DirectLinkedGraph *createDirectLinkedGraph(int maxVertexCount)
 {
-    int i = 0;
     DirectLinkedGraph *pReturn = NULL;
 
-    if (nodeCount <= 0)
+    if (maxVertexCount <= 0)
     {
         printf("Invalid Node count.\n");
         return (NULL);
@@ -25,8 +26,8 @@ DirectLinkedGraph *createDirectLinkedGraph(int nodeCount)
         printf("Memory Allocation failed.\n");
         return (NULL);
     }
-    pReturn->nodeCount = nodeCount;
-    pReturn->ppAdjEdge = (LinkedList **)malloc(sizeof(LinkedList *) * nodeCount);
+    pReturn->maxVertexCount = maxVertexCount;
+    pReturn->ppAdjEdge = (LinkedList **)malloc(sizeof(LinkedList *) * maxVertexCount);
     if (pReturn->ppAdjEdge == NULL)
     {
         printf("Memory Allocation failed.\n");
@@ -34,7 +35,7 @@ DirectLinkedGraph *createDirectLinkedGraph(int nodeCount)
         return (NULL);
     }
     //노드 개수만큼 linked list 만들기
-    for (i = 0; i < nodeCount; i++)
+    for (int i = 0; i < maxVertexCount; i++)
     {
         pReturn->ppAdjEdge[i] = createLinkedList();
         if (pReturn->ppAdjEdge[i] == NULL)
@@ -51,7 +52,7 @@ DirectLinkedGraph *createDirectLinkedGraph(int nodeCount)
 // 유효한 노드인지 체크
 int checkVertexValid(DirectLinkedGraph *pGraph, int node)
 {
-    if (pGraph != NULL && node >= 0 && node < pGraph->nodeCount)
+    if (pGraph != NULL && node >= 0 && node < pGraph->maxVertexCount)
         return 1;
     else
         return 0;
@@ -77,9 +78,7 @@ int removeEdgeDLG(DirectLinkedGraph *pGraph, int fromNode, int toNode)
     int count = 0;
     LinkedList *pList = NULL;
 
-    if (pGraph != NULL
-        && checkVertexValid(pGraph, fromNode)
-        && checkVertexValid(pGraph, toNode))
+    if (pGraph != NULL && checkVertexValid(pGraph, fromNode) && checkVertexValid(pGraph, toNode))
     {
         pList = pGraph->ppAdjEdge[fromNode];
         count = getLinkedListLength(pList);
@@ -121,16 +120,17 @@ int getEdgeDLG(DirectLinkedGraph *pGraph, int fromNode, int toNode)
     return ret;
 }
 
+// 그래프 보여주기
 void displayGraphDLG(DirectLinkedGraph *pGraph)
 {
-    int i = 0, j = 0, count = 0;
+    int count = 0;
 
     if (pGraph != NULL)
     {
-        count = pGraph->nodeCount;
-        for (i = 0; i < count; i++)
+        count = pGraph->maxVertexCount;
+        for (int i = 0; i < count; i++)
         {
-            for (j = 0; j < count; j++)
+            for (int j = 0; j < count; j++)
             {
                 if (getEdgeDLG(pGraph, i, j))
                     printf("1 ");
@@ -142,13 +142,14 @@ void displayGraphDLG(DirectLinkedGraph *pGraph)
     }
 }
 
+// 그래프 삭제하기
 void deleteGraphDLG(DirectLinkedGraph *pGraph)
 {
     int i = 0;
 
     if (pGraph != NULL)
     {
-        for (i = 0; i < pGraph->nodeCount; i++)
+        for (i = 0; i < pGraph->maxVertexCount; i++)
         {
             deleteLinkedList(pGraph->ppAdjEdge[i]);
         }
@@ -160,8 +161,8 @@ void deleteGraphDLG(DirectLinkedGraph *pGraph)
 
 int main(int argc, char *argv[])
 {
-    int nodeCount = 6;
-    DirectLinkedGraph *pG2 = createDirectLinkedGraph(nodeCount);
+    int maxVertexCount = 6;
+    DirectLinkedGraph *pG2 = createDirectLinkedGraph(maxVertexCount);
     if (pG2 != NULL)
     {
         addEdgeDLG(pG2, 0, 1);
@@ -175,7 +176,6 @@ int main(int argc, char *argv[])
 
         printf("G2: 방향그래프\n");
         displayGraphDLG(pG2);
-
         deleteGraphDLG(pG2);
     }
 
