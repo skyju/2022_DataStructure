@@ -1,13 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "linkedlist.h"
-
-typedef struct DirectLinkedGraphType
-{
-    int maxVertexCount; // 최대 노드 개수
-    LinkedList **ppAdjEdge; // 간선 저장을 위한 연결 리스트 포인터의 배열
-} DirectLinkedGraph;
+#include "linkedlist_Graph.h"
 
 // 그래프 생성
 DirectLinkedGraph *createDirectLinkedGraph(int maxVertexCount)
@@ -61,9 +55,14 @@ int checkVertexValid(DirectLinkedGraph *pGraph, int node)
 int addEdgeDLG(DirectLinkedGraph *pGraph, int fromNode, int toNode)
 {
     int ret = 0;
+    Vertex toVertex;
 
-    if (pGraph != NULL && checkVertexValid(pGraph, fromNode) && checkVertexValid(pGraph, toNode))
-        addLinkedListData(pGraph->ppAdjEdge[fromNode], 0, toNode);
+    if (pGraph != NULL
+        && checkVertexValid(pGraph, fromNode)
+        && checkVertexValid(pGraph, toNode)
+        && (fromNode != toNode)) //자기 자신과의 연결 불가
+        toVertex = 
+        addVertex(pGraph->ppAdjEdge[fromNode], 0, toNode);
     else
         ret = -1;
     return ret;
@@ -158,3 +157,119 @@ void deleteGraphDLG(DirectLinkedGraph *pGraph)
     }
 }
 
+int main(int argc, char *argv[])
+{
+    int maxVertexCount = 6;
+    DirectLinkedGraph *pG2 = createDirectLinkedGraph(maxVertexCount);
+    if (pG2 != NULL)
+    {
+        addEdgeDLG(pG2, 0, 1);
+        addEdgeDLG(pG2, 1, 2);
+        addEdgeDLG(pG2, 2, 0);
+        addEdgeDLG(pG2, 2, 3);
+        addEdgeDLG(pG2, 3, 2);
+        addEdgeDLG(pG2, 3, 4);
+        addEdgeDLG(pG2, 4, 5);
+        addEdgeDLG(pG2, 5, 3);
+
+        printf("G2: 방향그래프\n");
+        displayGraphDLG(pG2);
+        deleteGraphDLG(pG2);
+    }
+
+    return 0;
+}
+
+/*
+
+ int findGraphNodePosition(LinkedList* pList, int vertexID)
+ {
+ int i = 0, position = 0;
+ ListNode* pNode = NULL;
+
+ if (pList != NULL) {
+ pNode = pList->headerNode.pLink;
+ while(pNode != NULL) {
+ if (pNode->data.vertexID == vertexID) {
+ return position;
+ }
+
+ pNode = pNode->pLink;
+ position++;
+ }
+ }
+
+ return -1;
+ }
+
+
+
+ int getEdgeCountLG( DirectLinkedGraph* pGraph) {
+ int ret = 0;
+
+ if (pGraph != NULL) {
+ ret = pGraph->currentEdgeCount;
+ }
+
+ return ret;
+ }
+
+
+ int getVertexCountLG( DirectLinkedGraph* pGraph) {
+ int ret = 0;
+
+ if (pGraph != NULL) {
+ ret = pGraph->currentVertexCount;
+ }
+
+ return ret;
+ }
+
+ int getMaxVertexCountLG( DirectLinkedGraph* pGraph)
+ {
+ int ret = 0;
+
+ if (pGraph != NULL) {
+ ret = pGraph->nodeCount;
+ }
+
+ return ret;
+ }
+
+ int getGraphTypeLG( DirectLinkedGraph* pGraph)
+ {
+ int ret = 0;
+
+ if (pGraph != NULL) {
+ ret = pGraph->graphType;
+ }
+
+ return ret;
+ }
+
+ int isEmptyLG( DirectLinkedGraph* pGraph)
+ {
+ int ret = TRUE;
+
+ if (pGraph != NULL) {
+ if (pGraph->currentVertexCount > 0) {
+ ret = FALSE;
+ }
+ }
+
+ return ret;
+ }
+
+
+
+ void deleteGraphNode(LinkedList* pList, int delVertexID)
+ {
+ int i = 0, position = 0;
+ ListNode* pNode = NULL;
+
+ position = findGraphNodePosition(pList, delVertexID);
+ if (position >= 0) {
+ removeLLElement(pList, position);
+ }
+ }
+ */

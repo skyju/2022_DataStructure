@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "linkedlist.h"
+#include "linkedlist_Graph.h"
 
 LinkedList *createLinkedList()
 {
@@ -21,7 +21,7 @@ int addVertex(LinkedList *pList, int position, Vertex element)
     Vertex *pNewVertex = NULL;
     Vertex *pPreVertex = NULL;
 
-    if (!pList || position < 0 || position > pList->currentCount)
+    if (!pList || position < 0 || position > pList->currentVertexCount)
         return (FALSE);
 
     pNewVertex = createVertex(element);
@@ -31,7 +31,7 @@ int addVertex(LinkedList *pList, int position, Vertex element)
         pPreVertex = pPreVertex->pLink;
     pNewVertex->pLink = pPreVertex->pLink;
     pPreVertex->pLink = pNewVertex;
-    pList->currentCount++;
+    pList->currentVertexCount++;
     return (TRUE);
 }
 
@@ -47,11 +47,11 @@ int removeVertex(LinkedList *pList, int position)
     pDelVertex = pPreVertex->pLink;
     pPreVertex->pLink = pDelVertex->pLink;
     free(pDelVertex);
-    pList->currentCount--;
+    pList->currentVertexCount--;
     return (TRUE);
 }
 
-int getVertexI(LinkedList *pList, int position)
+int getVertexID(LinkedList *pList, int position)
 {
     int i = 0;
 
@@ -80,7 +80,7 @@ int getGraphVertexCount(LinkedList *pList)
 {
     if (NULL != pList)
     {
-        return pList->currentCount;
+        return pList->currentVertexCount;
     }
     return 0;
 }
